@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://phronexsec.com/sitemap.xml
