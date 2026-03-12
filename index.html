@@ -309,6 +309,67 @@ canvas {
   margin-top: 28px;
 }
 .modal-cta:hover { background: #2d8fff; box-shadow: 0 8px 25px rgba(0,118,245,0.4); transform: translateY(-2px); }
+
+/* ── Phone field with country selector ── */
+.phone-field-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  transition: border-color .25s;
+}
+.phone-field-wrap:focus-within { border-color: #3b82f6; }
+.country-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 14px 12px 14px 16px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid #1e293b;
+  cursor: pointer; flex-shrink: 0; white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+  color: #94a3b8;
+  transition: background .2s, color .2s;
+  border-radius: 10px 0 0 10px;
+}
+.country-btn:hover { background: rgba(0,118,245,0.08); color: #e2e8f0; }
+#country-flag { font-size: 1.2rem; line-height: 1; }
+#country-ddi { font-size: 0.78rem; letter-spacing: 0.04em; min-width: 34px; }
+.phone-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  padding: 14px 16px; color: #e2e8f0; font-size: 0.95rem; width: 100%;
+}
+.phone-input::placeholder { color: #475569; }
+.country-drop {
+  position: absolute; top: calc(100% + 6px); left: 0; width: 300px;
+  background: #0a1223; border: 1px solid rgba(0,118,245,0.3);
+  border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  z-index: 9000; display: none; overflow: hidden;
+}
+.country-drop.open { display: block; }
+.country-search-wrap {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; border-bottom: 1px solid rgba(30,58,138,0.3);
+}
+.country-search { flex:1; background:transparent; border:none; outline:none; color:#e2e8f0; font-size:0.82rem; }
+.country-search::placeholder { color: #475569; }
+.country-list {
+  list-style:none; margin:0; padding:6px 0;
+  max-height:240px; overflow-y:auto;
+  scrollbar-width:thin; scrollbar-color:var(--blue) transparent;
+}
+.country-list::-webkit-scrollbar { width:4px; }
+.country-list::-webkit-scrollbar-thumb { background:var(--blue); border-radius:4px; }
+.country-list li {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 14px; cursor:pointer; font-size:0.82rem;
+  color:#94a3b8; transition:background .15s, color .15s; font-weight:300;
+}
+.country-list li:hover, .country-list li.selected { background:rgba(0,118,245,0.1); color:#e2e8f0; }
+.country-list li .c-flag { font-size:1.1rem; flex-shrink:0; }
+.country-list li .c-name { flex:1; }
+.country-list li .c-code { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:#3b82f6; }
 </style>
 </head>
 
@@ -455,7 +516,28 @@ canvas {
     <form id="form" action="https://formspree.io/f/mqeybqzg" method="POST" class="space-y-4">
       <input name="name" placeholder="Nome" data-i18n-placeholder="pName" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg focus:border-blue-500 focus:outline-none transition">
       <input name="email" required type="email" placeholder="Email Corporativo *" data-i18n-placeholder="pEmail" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg focus:border-blue-500 focus:outline-none transition">
-      <input name="phone" id="phone" required type="tel" placeholder="Telefone / WhatsApp *" data-i18n-placeholder="pPhone" maxlength="20" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg focus:border-blue-500 focus:outline-none transition" style="font-family:'JetBrains Mono',monospace;letter-spacing:0.05em">
+      <!-- Phone with country selector -->
+      <div class="phone-field-wrap">
+        <button type="button" id="country-btn" class="country-btn" onclick="toggleCountryDrop()">
+          <span id="country-flag">🇧🇷</span>
+          <span id="country-ddi">+55</span>
+          <i class="fa-solid fa-chevron-down" id="country-chevron" style="font-size:10px;color:#64748b;transition:.2s"></i>
+        </button>
+        <input name="phone" id="phone" required type="tel" placeholder="(11) 99999-9999"
+          class="phone-input" autocomplete="tel" maxlength="22"
+          style="font-family:'JetBrains Mono',monospace;letter-spacing:0.04em">
+        <!-- Hidden field sends full number with DDI -->
+        <input type="hidden" name="phone_full" id="phone_full">
+
+        <!-- Dropdown -->
+        <div id="country-drop" class="country-drop">
+          <div class="country-search-wrap">
+            <i class="fa-solid fa-magnifying-glass" style="color:#64748b;font-size:12px"></i>
+            <input type="text" id="country-search" placeholder="Buscar país..." class="country-search" oninput="filterCountries(this.value)" autocomplete="off">
+          </div>
+          <ul id="country-list" class="country-list"></ul>
+        </div>
+      </div>
       <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="pMessage" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg h-32 focus:border-blue-500 focus:outline-none transition resize-none"></textarea>
       <button type="submit" class="bg-blue-600 hover:bg-blue-500 w-full py-4 rounded-lg font-bold text-white transition shadow-lg shadow-blue-900/20">
         <span data-i18n="send">Enviar Mensagem</span>
@@ -736,34 +818,117 @@ function setLang(lang) {
   });
 }
 
-/* ── Máscara telefone ── */
+/* ── Country Phone Selector + Mask ── */
 (function(){
-  const phone = document.getElementById('phone');
-  if (!phone) return;
-  phone.addEventListener('input', function(e) {
-    let v = this.value.replace(/\D/g, '');
-    if (v.length === 0) { this.value = ''; return; }
-    // Detect if starts with country code (55 = BR)
-    let out = '';
-    if (v.length <= 11) {
-      // BR format: (XX) XXXXX-XXXX or (XX) XXXX-XXXX
-      if (v.length <= 2)        out = '(' + v;
-      else if (v.length <= 6)   out = '(' + v.slice(0,2) + ') ' + v.slice(2);
-      else if (v.length <= 10)  out = '(' + v.slice(0,2) + ') ' + v.slice(2,6) + '-' + v.slice(6);
-      else                      out = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7,11);
-    } else {
-      // International: +XX (XX) XXXXX-XXXX
-      out = '+' + v.slice(0,2) + ' (' + v.slice(2,4) + ') ' + v.slice(4,9) + '-' + v.slice(9,13);
+  const COUNTRIES = [
+    { flag:'🇧🇷', name:'Brasil',           code:'+55',  iso:'BR', mask:'(##) #####-####' },
+    { flag:'🇵🇹', name:'Portugal',         code:'+351', iso:'PT', mask:'### ### ###' },
+    { flag:'🇺🇸', name:'United States',    code:'+1',   iso:'US', mask:'(###) ###-####' },
+    { flag:'🇬🇧', name:'United Kingdom',   code:'+44',  iso:'GB', mask:'#### ### ####' },
+    { flag:'🇩🇪', name:'Germany',          code:'+49',  iso:'DE', mask:'#### ########' },
+    { flag:'🇫🇷', name:'France',           code:'+33',  iso:'FR', mask:'## ## ## ## ##' },
+    { flag:'🇪🇸', name:'Espanha',          code:'+34',  iso:'ES', mask:'### ### ###' },
+    { flag:'🇮🇹', name:'Italy',            code:'+39',  iso:'IT', mask:'### ### ####' },
+    { flag:'🇳🇱', name:'Netherlands',      code:'+31',  iso:'NL', mask:'## ### ####' },
+    { flag:'🇨🇭', name:'Switzerland',      code:'+41',  iso:'CH', mask:'## ### ## ##' },
+    { flag:'🇦🇷', name:'Argentina',        code:'+54',  iso:'AR', mask:'(##) ####-####' },
+    { flag:'🇨🇴', name:'Colombia',         code:'+57',  iso:'CO', mask:'### ### ####' },
+    { flag:'🇲🇽', name:'México',           code:'+52',  iso:'MX', mask:'## #### ####' },
+    { flag:'🇨🇱', name:'Chile',            code:'+56',  iso:'CL', mask:'# #### ####' },
+    { flag:'🇵🇪', name:'Peru',             code:'+51',  iso:'PE', mask:'### ### ###' },
+    { flag:'🇺🇾', name:'Uruguay',          code:'+598', iso:'UY', mask:'## ### ####' },
+    { flag:'🇵🇾', name:'Paraguay',         code:'+595', iso:'PY', mask:'### ### ###' },
+    { flag:'🇧🇴', name:'Bolivia',          code:'+591', iso:'BO', mask:'# ### ####' },
+    { flag:'🇪🇨', name:'Ecuador',          code:'+593', iso:'EC', mask:'## ### ####' },
+    { flag:'🇻🇪', name:'Venezuela',        code:'+58',  iso:'VE', mask:'###-###-####' },
+    { flag:'🇯🇵', name:'Japan',            code:'+81',  iso:'JP', mask:'##-####-####' },
+    { flag:'🇨🇳', name:'China',            code:'+86',  iso:'CN', mask:'### #### ####' },
+    { flag:'🇮🇳', name:'India',            code:'+91',  iso:'IN', mask:'##### #####' },
+    { flag:'🇦🇺', name:'Australia',        code:'+61',  iso:'AU', mask:'### ### ###' },
+    { flag:'🇨🇦', name:'Canada',           code:'+1',   iso:'CA', mask:'(###) ###-####' },
+  ];
+
+  let selected = COUNTRIES[0];
+  let dropOpen = false;
+
+  const btn       = document.getElementById('country-btn');
+  const flagEl    = document.getElementById('country-flag');
+  const ddiEl     = document.getElementById('country-ddi');
+  const chevron   = document.getElementById('country-chevron');
+  const drop      = document.getElementById('country-drop');
+  const list      = document.getElementById('country-list');
+  const search    = document.getElementById('country-search');
+  const phoneInp  = document.getElementById('phone');
+  const phoneFull = document.getElementById('phone_full');
+
+  if (!btn) return;
+
+  function applyMask(val, mask) {
+    let digits = val.replace(/\D/g,'');
+    let out = '', di = 0;
+    for (let i = 0; i < mask.length && di < digits.length; i++) {
+      if (mask[i] === '#') { out += digits[di++]; }
+      else { out += mask[i]; if (di < digits.length || out.length < mask.length) {} }
     }
-    this.value = out;
+    // Trim trailing separators
+    return out.replace(/[\s\-\(\)]+$/, '');
+  }
+
+  function renderList(filter) {
+    list.innerHTML = '';
+    const q = (filter||'').toLowerCase();
+    COUNTRIES.filter(c => !q || c.name.toLowerCase().includes(q) || c.code.includes(q)).forEach(c => {
+      const li = document.createElement('li');
+      if (c === selected) li.classList.add('selected');
+      li.innerHTML = `<span class="c-flag">${c.flag}</span><span class="c-name">${c.name}</span><span class="c-code">${c.code}</span>`;
+      li.onclick = () => selectCountry(c);
+      list.appendChild(li);
+    });
+  }
+
+  function selectCountry(c) {
+    selected = c;
+    flagEl.textContent = c.flag;
+    ddiEl.textContent  = c.code;
+    phoneInp.placeholder = c.mask.replace(/#/g,'0');
+    phoneInp.value = '';
+    phoneInp.focus();
+    closeDropdown();
+    renderList();
+  }
+
+  function openDropdown() {
+    drop.classList.add('open');
+    chevron.style.transform = 'rotate(180deg)';
+    search.value = '';
+    renderList();
+    setTimeout(() => search.focus(), 50);
+    dropOpen = true;
+  }
+
+  function closeDropdown() {
+    drop.classList.remove('open');
+    chevron.style.transform = 'rotate(0deg)';
+    dropOpen = false;
+  }
+
+  window.toggleCountryDrop = function() { dropOpen ? closeDropdown() : openDropdown(); };
+  window.filterCountries   = function(q) { renderList(q); };
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (dropOpen && !btn.contains(e.target) && !drop.contains(e.target)) closeDropdown();
   });
-  phone.addEventListener('keydown', function(e) {
-    if (e.key === 'Backspace') {
-      // Allow clean deletion
-      let v = this.value;
-      if (/[\s\-\(\)]$/.test(v)) this.value = v.slice(0, -1);
-    }
+
+  // Phone input masking
+  phoneInp.addEventListener('input', function() {
+    this.value = applyMask(this.value, selected.mask);
+    phoneFull.value = selected.code + ' ' + this.value;
   });
+
+  // Init
+  renderList();
+  phoneInp.placeholder = selected.mask.replace(/#/g,'0');
 })();
 (function(){
   const slider = document.getElementById('techSlider');
