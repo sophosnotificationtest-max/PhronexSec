@@ -7,7 +7,7 @@
 <meta name="description" content="PhronexSec Cybersecurity. Especialistas em firewall management, network security e infraestrutura digital segura.">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -23,7 +23,18 @@
 body {
   background: var(--dark);
   color: #e2e8f0;
-  font-family: 'Syne', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv01', 'cv02';
+}
+
+h1, h2, h3, h4, h5 {
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+p, li {
+  font-weight: 300;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
@@ -35,11 +46,62 @@ canvas {
 }
 
 /* ── Logo ── */
-.logoGlow { filter: drop-shadow(0 0 35px rgba(0,118,245,.6)); }
+.logoGlow {
+  filter:
+    drop-shadow(0 0 12px rgba(0,118,245,.9))
+    drop-shadow(0 0 40px rgba(0,118,245,.55))
+    drop-shadow(0 0 80px rgba(0,118,245,.25));
+}
 .logoHero { animation: floatLogo 7s ease-in-out infinite; }
 @keyframes floatLogo {
   0%,100% { transform: translateY(0); }
   50%     { transform: translateY(-18px); }
+}
+
+/* ── Neon Cybersecurity label ── */
+.neon-label {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #60a5fa;
+  text-shadow:
+    0 0 6px rgba(96,165,250,1),
+    0 0 18px rgba(0,118,245,0.9),
+    0 0 40px rgba(0,118,245,0.6),
+    0 0 80px rgba(0,118,245,0.3);
+  animation: neonPulse 3s ease-in-out infinite;
+  position: relative;
+}
+.neon-label::before,
+.neon-label::after {
+  content: '—';
+  display: inline-block;
+  opacity: 0.35;
+  margin: 0 10px;
+  font-size: 0.6rem;
+  vertical-align: middle;
+  color: #3b82f6;
+}
+@keyframes neonPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 6px rgba(96,165,250,1),
+      0 0 18px rgba(0,118,245,0.9),
+      0 0 40px rgba(0,118,245,0.6),
+      0 0 80px rgba(0,118,245,0.3);
+    opacity: 1;
+  }
+  50% {
+    text-shadow:
+      0 0 4px rgba(96,165,250,0.8),
+      0 0 12px rgba(0,118,245,0.7),
+      0 0 28px rgba(0,118,245,0.4),
+      0 0 60px rgba(0,118,245,0.2);
+    opacity: 0.85;
+  }
 }
 
 /* ── Service Cards ── */
@@ -72,7 +134,7 @@ canvas {
 @keyframes slideTech { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
 /* ── Lang buttons ── */
-.lang-btn { transition: .3s; opacity: .6; font-family: 'Space Mono', monospace; font-size: 11px; }
+.lang-btn { transition: .3s; opacity: .6; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: 500; }
 .lang-btn:hover, .lang-btn.active { opacity: 1; color: var(--blue); }
 
 /* ── MODAL ── */
@@ -152,8 +214,8 @@ canvas {
 }
 .modal-icon-wrap i { font-size: 24px; color: var(--blue); }
 
-.modal-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; }
-.modal-subtitle { color: #64748b; font-size: 0.85rem; font-family: 'Space Mono', monospace; }
+.modal-title { font-size: 1.55rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.025em; line-height: 1.2; }
+.modal-subtitle { color: #4a5568; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; font-weight: 400; }
 
 /* Feature list */
 .feat-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
@@ -163,7 +225,8 @@ canvas {
   background: rgba(0,118,245,0.05);
   border: 1px solid rgba(0,118,245,0.1);
   border-radius: 10px;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 400;
   color: #cbd5e1;
   transition: .25s;
 }
@@ -180,9 +243,9 @@ canvas {
 }
 
 .modal-section-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: .12em;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--blue);
   margin-bottom: 14px;
@@ -197,8 +260,9 @@ canvas {
   border-radius: 100px;
   border: 1px solid rgba(0,118,245,0.25);
   background: rgba(0,118,245,0.07);
-  font-size: 0.78rem;
-  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
   color: #93c5fd;
   transition: .2s;
 }
@@ -211,8 +275,9 @@ canvas {
   border-radius: 10px;
   background: var(--blue);
   color: #fff;
-  font-weight: 700;
-  font-size: 0.9rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
   cursor: pointer;
   transition: .25s;
   text-decoration: none;
@@ -227,8 +292,8 @@ canvas {
 
 <!-- ═══════════════ HEADER ═══════════════ -->
 <header class="fixed w-full bg-black/40 backdrop-blur-md border-b border-blue-900/40 z-50">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    <img src="phronexsec-logo.png" class="h-12 md:h-16 logoGlow" alt="PhronexSec Logo">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+    <img src="phronexsec-logo.png" class="h-16 md:h-20 logoGlow" alt="PhronexSec Logo">
     <div class="flex gap-5">
       <button onclick="setLang('pt')" class="lang-btn active" id="btn-pt">PT</button>
       <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
@@ -238,17 +303,16 @@ canvas {
 </header>
 
 <!-- ═══════════════ HERO ═══════════════ -->
-<section class="min-h-screen flex items-center text-center pt-24">
+<section class="min-h-screen flex items-center text-center pt-28">
   <div class="max-w-5xl mx-auto px-6">
-    <img src="phronexsec-logo.png" class="mx-auto h-64 md:h-80 logoHero logoGlow mb-12" alt="PhronexSec">
-    <div class="mb-10 space-y-3">
-      <p class="text-xs font-mono tracking-[0.25em] uppercase text-blue-500 opacity-80">Cybersecurity</p>
-      <h1 data-i18n="hero" class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
-        Network Defense<br>
-        <span class="text-blue-500">&amp;</span> Security Engineering
+    <img src="phronexsec-logo.png" class="mx-auto h-72 md:h-96 logoHero logoGlow mb-10" alt="PhronexSec">
+    <div class="mb-10 space-y-5">
+      <p class="neon-label">Cybersecurity</p>
+      <h1 data-i18n="hero" class="text-xl md:text-2xl font-light text-slate-400 whitespace-nowrap" style="letter-spacing:0.04em;line-height:1.4">
+        Network Defense <span class="text-blue-500/70">&amp;</span> Security Engineering
       </h1>
     </div>
-    <p data-i18n="heroSub" class="text-base md:text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
+    <p data-i18n="heroSub" class="text-sm md:text-base text-slate-500 max-w-md mx-auto" style="line-height:1.75;font-weight:300;letter-spacing:0.01em">
       Especialistas em segurança cibernética e defesa de infraestruturas digitais críticas na América Latina e Europa.
     </p>
   </div>
@@ -258,8 +322,8 @@ canvas {
 <section class="py-24 border-t border-slate-900">
   <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
     <div>
-      <h2 data-i18n="aboutTitle" class="text-3xl font-bold mb-6 text-blue-500">Quem Somos</h2>
-      <p data-i18n="aboutText" class="text-slate-400 text-lg leading-relaxed">
+      <h2 data-i18n="aboutTitle" class="text-3xl font-semibold mb-6 text-blue-400" style="letter-spacing:-0.02em">Quem Somos</h2>
+      <p data-i18n="aboutText" class="text-slate-400 text-base leading-relaxed font-light">
         A PhronexSec é especializada em cibersegurança e infraestrutura de redes, fundada por engenheiros ex-profissionais da Sophos. Nossa equipe possui mais de 20 anos de experiência em TI, segurança cibernética e operações de redes, atuando em ambientes corporativos e infraestruturas críticas na América Latina e Europa. A empresa também integra pesquisa acadêmica avançada, incluindo doutorado em Telemática e sistemas inteligentes.
       </p>
     </div>
@@ -275,9 +339,9 @@ canvas {
 <!-- ═══════════════ SERVIÇOS ═══════════════ -->
 <section class="py-24 bg-black/40">
   <div class="max-w-7xl mx-auto px-6 text-center">
-    <p class="text-blue-500 font-mono text-xs tracking-widest uppercase mb-3" data-i18n="servicesLabel">O que fazemos</p>
-    <h2 data-i18n="servicesTitle" class="text-4xl font-extrabold mb-4">Principais Serviços</h2>
-    <p class="text-slate-500 mb-16 text-sm" data-i18n="servicesHint">Clique em cada serviço para ver detalhes</p>
+    <p class="text-blue-500 text-xs uppercase mb-3" style="font-family:'JetBrains Mono',monospace;letter-spacing:0.2em;font-size:0.7rem;opacity:0.85" data-i18n="servicesLabel">O que fazemos</p>
+    <h2 data-i18n="servicesTitle" class="text-4xl font-bold mb-4" style="letter-spacing:-0.025em">Principais Serviços</h2>
+
 
     <div class="grid md:grid-cols-3 gap-8 text-left">
 
@@ -289,7 +353,7 @@ canvas {
           </div>
           <i class="fa-solid fa-arrow-right text-slate-600 arrow-icon mt-1"></i>
         </div>
-        <h3 class="text-xl font-bold mb-3" data-i18n="svc1">Gestão Avançada de Firewalls</h3>
+        <h3 class="text-xl font-semibold mb-3" style="letter-spacing:-0.018em" data-i18n="svc1">Gestão Avançada de Firewalls</h3>
         <p class="text-slate-400 text-sm leading-relaxed mb-4" data-i18n="svc1Desc">IPS, ATP, AV, VPN, WAF, NAT e Hardening de segurança de rede corporativa.</p>
         <div class="flex flex-wrap gap-2 mt-auto">
           <span class="text-xs px-2 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 font-mono">Sophos</span>
@@ -306,7 +370,7 @@ canvas {
           </div>
           <i class="fa-solid fa-arrow-right text-slate-600 arrow-icon mt-1"></i>
         </div>
-        <h3 class="text-xl font-bold mb-3" data-i18n="svc2">Infraestrutura de TI</h3>
+        <h3 class="text-xl font-semibold mb-3" style="letter-spacing:-0.018em" data-i18n="svc2">Infraestrutura de TI</h3>
         <p class="text-slate-400 text-sm leading-relaxed mb-4" data-i18n="svc2Desc">Desenho SD-WAN, Switching L2/L3, VLANs, virtualização e suporte a servidores Linux/Windows.</p>
         <div class="flex flex-wrap gap-2 mt-auto">
           <span class="text-xs px-2 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 font-mono">Cisco</span>
@@ -323,7 +387,7 @@ canvas {
           </div>
           <i class="fa-solid fa-arrow-right text-slate-600 arrow-icon mt-1"></i>
         </div>
-        <h3 class="text-xl font-bold mb-3" data-i18n="svc3">Monitoramento de Rede</h3>
+        <h3 class="text-xl font-semibold mb-3" style="letter-spacing:-0.018em" data-i18n="svc3">Monitoramento de Rede</h3>
         <p class="text-slate-400 text-sm leading-relaxed mb-4" data-i18n="svc3Desc">Monitoramento de eventos, análise de logs, investigação de incidentes e resposta contínua.</p>
         <div class="flex flex-wrap gap-2 mt-auto">
           <span class="text-xs px-2 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 font-mono">Zabbix</span>
@@ -339,7 +403,7 @@ canvas {
 <!-- ═══════════════ TECNOLOGIAS ═══════════════ -->
 <section class="py-24 border-y border-slate-900 overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 text-center mb-16">
-    <h2 class="text-4xl font-extrabold text-white" data-i18n="techTitle">Parceiros e Tecnologias</h2>
+    <h2 class="text-4xl font-bold text-white" style="letter-spacing:-0.025em" data-i18n="techTitle">Parceiros e Tecnologias</h2>
   </div>
   <div class="relative w-full overflow-hidden">
     <div class="techSlider">
@@ -375,7 +439,7 @@ canvas {
 <!-- ═══════════════ CONTATO ═══════════════ -->
 <section id="contato" class="py-24">
   <div class="max-w-2xl mx-auto px-6">
-    <h2 data-i18n="contactTitle" class="text-3xl font-bold text-center mb-10">Fale com nossos especialistas</h2>
+    <h2 data-i18n="contactTitle" class="text-3xl font-semibold text-center mb-10" style="letter-spacing:-0.02em">Fale com nossos especialistas</h2>
     <form id="form" action="https://formspree.io/f/mqeybqzg" method="POST" class="space-y-4">
       <input name="name" required placeholder="Nome" data-i18n-placeholder="pName" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg focus:border-blue-500 focus:outline-none transition">
       <input name="email" required type="email" placeholder="Email Corporativo" data-i18n-placeholder="pEmail" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg focus:border-blue-500 focus:outline-none transition">
@@ -410,7 +474,7 @@ canvas {
     </div>
     <div class="modal-body">
 
-      <p class="text-slate-400 text-sm leading-relaxed mb-8" data-i18n="svc1ModalDesc">
+      <p class="text-slate-400 text-sm mb-8" style="line-height:1.8;font-weight:300" data-i18n="svc1ModalDesc">
         Oferecemos configuração, implementação e gestão contínua de firewalls corporativos, garantindo proteção perimetral robusta contra ameaças internas e externas. Nossa equipe ex-Sophos entrega resultados com precisão e metodologia enterprise.
       </p>
 
@@ -458,7 +522,7 @@ canvas {
     </div>
     <div class="modal-body">
 
-      <p class="text-slate-400 text-sm leading-relaxed mb-8" data-i18n="svc2ModalDesc">
+      <p class="text-slate-400 text-sm mb-8" style="line-height:1.8;font-weight:300" data-i18n="svc2ModalDesc">
         Desenhamos, implementamos e suportamos infraestruturas de TI corporativas completas — desde a arquitetura de rede até a virtualização de servidores — com foco em desempenho, resiliência e segurança integrada.
       </p>
 
@@ -508,7 +572,7 @@ canvas {
     </div>
     <div class="modal-body">
 
-      <p class="text-slate-400 text-sm leading-relaxed mb-8" data-i18n="svc3ModalDesc">
+      <p class="text-slate-400 text-sm mb-8" style="line-height:1.8;font-weight:300" data-i18n="svc3ModalDesc">
         Fornecemos visibilidade contínua sobre a saúde e segurança da sua rede. Monitoramos eventos em tempo real, analisamos logs e respondemos a incidentes com agilidade — minimizando impacto e tempo de inatividade.
       </p>
 
