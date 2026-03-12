@@ -13,36 +13,65 @@
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
 <style>
 
 body{
-font-family: 'Inter', sans-serif;
+font-family:'Inter',sans-serif;
 background:#02060c;
 color:#e5e7eb;
 }
 
-.hero-bg{
-background:
-radial-gradient(circle at 20% 30%, rgba(0,118,245,0.2), transparent 40%),
-radial-gradient(circle at 80% 70%, rgba(0,118,245,0.15), transparent 40%);
+/* FUNDO ANIMADO */
+
+#particles-js{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:-1;
+background:#02060c;
 }
 
-.logo-glow{
-filter:drop-shadow(0 0 20px rgba(0,118,245,.5));
+/* HERO GRADIENT */
+
+.hero-bg{
+background:
+radial-gradient(circle at 20% 30%, rgba(0,118,245,0.25), transparent 40%),
+radial-gradient(circle at 80% 70%, rgba(0,118,245,0.2), transparent 40%);
 }
+
+/* LOGO */
+
+.logo-glow{
+filter:drop-shadow(0 0 30px rgba(0,118,245,.7));
+animation:float 6s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0px);}
+}
+
+/* CARDS */
 
 .card{
 background:#0b1220;
 border:1px solid #1f2a44;
-transition:0.3s;
+transition:.3s;
 }
 
 .card:hover{
 border-color:#0076f5;
-transform:translateY(-5px);
+transform:translateY(-6px);
 }
+
+/* ANIMAÇÃO SCROLL */
 
 .fade{
 opacity:0;
@@ -61,19 +90,19 @@ transform:translateY(0);
 
 <body>
 
+<!-- FUNDO PARTICULAS -->
+
+<div id="particles-js"></div>
+
 <!-- NAVBAR -->
 
-<nav class="fixed w-full bg-[#02060c]/90 backdrop-blur border-b border-[#182033] z-50">
+<nav class="fixed w-full bg-[#02060c]/80 backdrop-blur border-b border-[#182033] z-50">
 
 <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-<div class="flex items-center gap-3">
+<div class="flex items-center">
 
-<img src="phronexsec-logo.png" class="h-10 logo-glow">
-
-<span class="font-semibold text-lg">
-PhronexSec
-</span>
+<img src="phronexsec-logo.png" class="h-14 md:h-16 logo-glow">
 
 </div>
 
@@ -126,7 +155,7 @@ Falar com especialista
 <div class="text-center fade">
 
 <img src="phronexsec-logo.png"
-class="mx-auto w-80 logo-glow">
+class="mx-auto w-[420px] md:w-[520px] logo-glow">
 
 </div>
 
@@ -151,8 +180,7 @@ Quem Somos
 A PhronexSec é uma empresa especializada em cibersegurança e infraestrutura
 de redes fundada por engenheiros especialistas e ex-profissionais da Sophos.
 Nossa equipe possui mais de 20 anos de experiência em segurança digital,
-operações de rede e arquitetura de infraestrutura corporativa atuando
-em empresas da América Latina e Europa.
+operações de rede e arquitetura de infraestrutura corporativa.
 
 </p>
 
@@ -187,8 +215,7 @@ Gestão de Firewalls
 <p class="text-gray-400 text-sm">
 
 Configuração e gestão de firewalls corporativos,
-implementação de IPS, WAF, VPN e políticas
-de segurança avançadas.
+implementação de IPS, WAF, VPN e políticas de segurança.
 
 </p>
 
@@ -225,7 +252,7 @@ Monitoramento de Segurança
 
 <p class="text-gray-400 text-sm">
 
-Análise de logs, monitoramento de eventos
+Monitoramento de eventos, análise de logs
 e investigação de incidentes de segurança.
 
 </p>
@@ -304,39 +331,22 @@ action="https://formspree.io/f/mqeybqzg"
 method="POST"
 class="space-y-6">
 
-<input
-type="text"
-name="Nome"
-placeholder="Nome completo"
-required
+<input type="text" name="Nome" placeholder="Nome completo" required
 class="w-full p-4 rounded-lg bg-[#0b1220] border border-[#1f2a44]">
 
-<input
-type="email"
-name="Email"
-placeholder="Email corporativo"
-required
+<input type="email" name="Email" placeholder="Email corporativo" required
 class="w-full p-4 rounded-lg bg-[#0b1220] border border-[#1f2a44]">
 
-<input
-type="text"
-name="Empresa"
-placeholder="Empresa"
+<input type="text" name="Empresa" placeholder="Empresa"
 class="w-full p-4 rounded-lg bg-[#0b1220] border border-[#1f2a44]">
 
-<textarea
-name="Mensagem"
-rows="5"
-placeholder="Descreva sua necessidade"
-required
+<textarea name="Mensagem" rows="5" placeholder="Descreva sua necessidade" required
 class="w-full p-4 rounded-lg bg-[#0b1220] border border-[#1f2a44]"></textarea>
 
 <input type="hidden" name="_subject" value="Novo contato pelo site PhronexSec">
-
 <input type="text" name="_gotcha" style="display:none">
 
-<button
-type="submit"
+<button type="submit"
 class="w-full bg-blue-600 hover:bg-blue-500 p-4 rounded-xl font-semibold">
 
 Enviar mensagem
@@ -359,6 +369,8 @@ Enviar mensagem
 
 <script>
 
+/* ANIMAÇÃO SCROLL */
+
 const observer=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
 if(entry.isIntersecting){
@@ -369,6 +381,51 @@ entry.target.classList.add("show")
 
 document.querySelectorAll(".fade").forEach(el=>{
 observer.observe(el)
+})
+
+/* FUNDO PARTICULAS */
+
+particlesJS("particles-js",{
+
+particles:{
+
+number:{value:90},
+
+color:{value:"#0076f5"},
+
+shape:{type:"circle"},
+
+opacity:{value:0.5},
+
+size:{value:3},
+
+line_linked:{
+enable:true,
+distance:150,
+color:"#0076f5",
+opacity:0.4,
+width:1
+},
+
+move:{
+enable:true,
+speed:2
+}
+
+},
+
+interactivity:{
+events:{
+onhover:{enable:true,mode:"grab"}
+},
+
+modes:{
+grab:{distance:140,line_linked:{opacity:1}}
+}
+},
+
+retina_detect:true
+
 })
 
 </script>
