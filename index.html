@@ -2,498 +2,338 @@
 <html lang="pt-BR">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhronexSec | Cybersecurity • Network Defense</title>
+    <meta name="description" content="Cybersecurity, Firewall Management, Network Architecture and Security Monitoring">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<title>PhronexSec | Cybersecurity • Network Defense</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #02060c;
+            color: #e5e7eb;
+        }
 
-<meta name="description" content="Cybersecurity, Firewall Management, Network Architecture and Security Monitoring">
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
 
-<script src="https://cdn.tailwindcss.com"></script>
+        .logo {
+            filter: drop-shadow(0 0 25px rgba(0, 118, 245, .7));
+        }
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        .card {
+            background: #0b1220;
+            border: 1px solid #1f2a44;
+            transition: .3s;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        .card:hover {
+            border-color: #0076f5;
+            transform: translateY(-6px);
+        }
 
-<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+        .fade {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: 0.8s;
+        }
 
-<style>
+        .fade.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-body{
-font-family:'Inter',sans-serif;
-background:#02060c;
-color:#e5e7eb;
-}
+        .lang-btn {
+            border: 1px solid #1f2a44;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-left: 4px;
+            transition: .3s;
+        }
 
-/* PARTICLES */
+        .lang-btn:hover {
+            background: #0076f5;
+            border-color: #0076f5;
+        }
 
-#particles-js{
-position:fixed;
-width:100%;
-height:100%;
-top:0;
-left:0;
-z-index:-1;
-background:#02060c;
-}
+        .logo-slider {
+            overflow: hidden;
+            margin-top: 50px;
+        }
 
-/* HERO */
+        .logo-track {
+            display: flex;
+            gap: 80px;
+            width: max-content;
+            animation: scroll 40s linear infinite;
+        }
 
-.hero-bg{
-background:
-radial-gradient(circle at 20% 30%, rgba(0,118,245,0.25), transparent 40%),
-radial-gradient(circle at 80% 70%, rgba(0,118,245,0.2), transparent 40%);
-}
+        .logo-track img {
+            height: 40px;
+            opacity: .8;
+            filter: grayscale(1) brightness(2);
+        }
 
-/* LOGO */
-
-.logo-glow{
-filter:drop-shadow(0 0 30px rgba(0,118,245,.7));
-animation:float 6s ease-in-out infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
-100%{transform:translateY(0)}
-}
-
-/* CARDS */
-
-.card{
-background:#0b1220;
-border:1px solid #1f2a44;
-transition:.3s;
-}
-
-.card:hover{
-border-color:#0076f5;
-transform:translateY(-6px);
-}
-
-/* SCROLL */
-
-.fade{
-opacity:0;
-transform:translateY(40px);
-transition:0.8s;
-}
-
-.fade.show{
-opacity:1;
-transform:translateY(0);
-}
-
-/* LANGUAGE BUTTON */
-
-.lang-btn{
-border:1px solid #1f2a44;
-padding:5px 10px;
-border-radius:6px;
-font-size:12px;
-transition:.3s;
-}
-
-.lang-btn:hover{
-background:#0076f5;
-border-color:#0076f5;
-}
-
-/* LOGO SLIDER */
-
-.logo-slider{
-overflow:hidden;
-margin-top:50px;
-}
-
-.logo-track{
-display:flex;
-gap:80px;
-width:max-content;
-animation:scroll 40s linear infinite;
-}
-
-.logo-track img{
-height:40px;
-opacity:.8;
-}
-
-@keyframes scroll{
-0%{transform:translateX(0)}
-100%{transform:translateX(-50%)}
-}
-
-</style>
-
+        @keyframes scroll {
+            0% { transform: translateX(0) }
+            100% { transform: translateX(-50%) }
+        }
+    </style>
 </head>
 
 <body>
 
-<div id="particles-js"></div>
-
-<!-- NAVBAR -->
-
-<nav class="fixed w-full bg-[#02060c]/80 backdrop-blur border-b border-[#182033] z-50">
-
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-<img src="phronexsec-logo.png" class="h-16 logo-glow">
-
-<div class="hidden md:flex gap-8 text-sm items-center">
-
-<a href="#empresa" data-i18n="empresa">Empresa</a>
-<a href="#servicos" data-i18n="servicos">Serviços</a>
-<a href="#tecnologias" data-i18n="tecnologias">Tecnologias</a>
-<a href="#contato" data-i18n="contato">Contato</a>
-
-<div class="flex gap-2 ml-6">
-<button onclick="setLang('pt')" class="lang-btn">PT</button>
-<button onclick="setLang('en')" class="lang-btn">EN</button>
-<button onclick="setLang('es')" class="lang-btn">ES</button>
-</div>
-
-</div>
-
-</div>
-</nav>
-
-<!-- HERO -->
-
-<section class="hero-bg min-h-screen flex items-center pt-32">
-
-<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-
-<div class="fade">
-
-<h1 class="text-5xl md:text-7xl font-bold leading-tight" data-i18n="hero_title">
-DEFESA DIGITAL PARA INFRAESTRUTURAS CRÍTICAS
-</h1>
-
-<p class="mt-6 text-gray-400 max-w-xl" data-i18n="hero_desc">
-Especialistas em segurança cibernética e arquitetura de redes corporativas.
-</p>
-
-<a href="#contato"
-class="inline-block mt-8 bg-blue-600 hover:bg-blue-500 px-8 py-4 rounded-xl font-semibold"
-data-i18n="hero_button">
-
-Falar com especialista
-
-</a>
-
-</div>
-
-<div class="text-center fade">
-
-<img src="phronexsec-logo.png"
-class="mx-auto w-[450px] md:w-[540px] logo-glow">
-
-</div>
-
-</div>
-
-</section>
-
-<!-- EMPRESA -->
-
-<section id="empresa" class="py-28">
-
-<div class="max-w-6xl mx-auto px-6 text-center fade">
-
-<h2 class="text-4xl font-bold mb-10">Quem Somos</h2>
-
-<p class="text-gray-400 max-w-3xl mx-auto leading-relaxed">
-
-A PhronexSec é especializada em cibersegurança e infraestrutura de redes,
-fundada por engenheiros especialistas e ex-profissionais da Sophos.
-A equipe possui mais de 20 anos de experiência em tecnologia da informação,
-segurança cibernética e operações de redes em ambientes corporativos
-na América Latina e Europa.
-
-</p>
-
-</div>
-
-</section>
-
-<!-- DIFERENCIAIS -->
-
-<section class="py-24 bg-[#050b16]">
-
-<div class="max-w-6xl mx-auto px-6">
-
-<h2 class="text-4xl font-bold text-center mb-14">Diferenciais</h2>
-
-<ul class="grid md:grid-cols-2 gap-6 text-gray-400">
-
-<li>Equipe formada por especialistas em Cybersecurity</li>
-<li>Ex-engenheiros Sophos com experiência internacional</li>
-<li>Experiência em suporte e arquitetura de segurança</li>
-<li>Conhecimento avançado em defesa cibernética</li>
-<li>Experiência em infraestruturas críticas</li>
-
-</ul>
-
-</div>
-
-</section>
-
-<!-- SERVIÇOS -->
-
-<section id="servicos" class="py-28">
-
-<div class="max-w-7xl mx-auto px-6">
-
-<h2 class="text-4xl font-bold text-center mb-16">Serviços</h2>
-
-<div class="grid md:grid-cols-3 gap-8">
-
-<div class="card p-8 rounded-2xl fade">
-
-<h3 class="text-xl font-semibold mb-4">
-Gestão Avançada de Firewalls
-</h3>
-
-<ul class="text-gray-400 text-sm space-y-2">
-
-<li>Configuração de firewalls corporativos</li>
-<li>IPS / ATP / AV</li>
-<li>WAF / NAT / DNAT</li>
-<li>VPN e tunelamento seguro</li>
-<li>Hardening de segurança</li>
-<li>Monitoramento de logs</li>
-
-</ul>
-
-</div>
-
-<div class="card p-8 rounded-2xl fade">
-
-<h3 class="text-xl font-semibold mb-4">
-Infraestrutura de TI
-</h3>
-
-<ul class="text-gray-400 text-sm space-y-2">
-
-<li>Troubleshooting avançado</li>
-<li>Arquitetura de redes</li>
-<li>SD-WAN corporativo</li>
-<li>Switching L2/L3 e VLAN</li>
-<li>Suporte Linux e Windows</li>
-
-</ul>
-
-</div>
-
-<div class="card p-8 rounded-2xl fade">
-
-<h3 class="text-xl font-semibold mb-4">
-Monitoramento de Segurança
-</h3>
-
-<ul class="text-gray-400 text-sm space-y-2">
-
-<li>Monitoramento de eventos</li>
-<li>Análise de logs</li>
-<li>Investigação de incidentes</li>
-
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- TECNOLOGIAS -->
-
-<section id="tecnologias" class="py-28">
-
-<div class="max-w-6xl mx-auto px-6 text-center">
-
-<h2 class="text-4xl font-bold mb-12">
-Tecnologias Utilizadas
-</h2>
-
-<div class="logo-slider">
-
-<div class="logo-track">
-
-<img src="logos/sophos.png">
-<img src="logos/cisco.png">
-<img src="logos/vmware.png">
-<img src="logos/veeam.png">
-<img src="logos/fortinet.png">
-<img src="logos/mikrotik.png">
-
-<img src="logos/sophos.png">
-<img src="logos/cisco.png">
-<img src="logos/vmware.png">
-<img src="logos/veeam.png">
-<img src="logos/fortinet.png">
-<img src="logos/mikrotik.png">
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- CONTATO -->
-
-<section id="contato" class="py-28 bg-[#050b16]">
-
-<div class="max-w-xl mx-auto px-6">
-
-<h2 class="text-4xl font-bold text-center mb-12">
-Contato
-</h2>
-
-<form id="contactForm"
-action="https://formspree.io/f/mqeybqzg"
-method="POST"
-class="space-y-6">
-
-<input type="text" name="Nome" placeholder="Nome completo" required
-class="w-full p-4 rounded-lg bg-[#0b1220] border border-[#1f2a44]">
-
-<input type="email" name="Email" placeholder="Email corporativo" required
-class="w-full p-4 rounded-lg bg-[#0b1220] border border-[#1f2a44]">
-
-<textarea name="Mensagem" rows="5" placeholder="Mensagem" required
-class="w-full p-4 rounded-lg bg-[#0b1220] border border-[#1f2a44]"></textarea>
-
-<button type="submit"
-class="w-full bg-blue-600 hover:bg-blue-500 p-4 rounded-xl font-semibold">
-
-Enviar mensagem
-
-</button>
-
-<p id="successMsg" class="hidden text-green-400 text-center font-semibold">
-✔ Mensagem enviada com sucesso. Retornando ao início...
-</p>
-
-</form>
-
-</div>
-
-</section>
-
-<footer class="py-10 text-center text-gray-500 text-sm border-t border-[#182033]">
-
-© 2026 PhronexSec • Cybersecurity & Network Defense
-
-</footer>
-
-<script>
-
-/* SCROLL */
-
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("show")
-}
-})
-})
-
-document.querySelectorAll(".fade").forEach(el=>{
-observer.observe(el)
-})
-
-/* PARTICLES */
-
-particlesJS("particles-js",{
-particles:{
-number:{value:90},
-color:{value:"#0076f5"},
-shape:{type:"circle"},
-opacity:{value:0.5},
-size:{value:3},
-line_linked:{enable:true,distance:150,color:"#0076f5",opacity:0.4,width:1},
-move:{enable:true,speed:2}
-}
-})
-
-/* FORM AJAX */
-
-const form=document.getElementById("contactForm")
-const msg=document.getElementById("successMsg")
-
-form.addEventListener("submit",async e=>{
-e.preventDefault()
-
-const data=new FormData(form)
-
-await fetch(form.action,{
-method:"POST",
-body:data,
-headers:{Accept:"application/json"}
-})
-
-msg.classList.remove("hidden")
-
-form.reset()
-
-setTimeout(()=>{
-window.scrollTo({top:0,behavior:"smooth"})
-},1500)
-
-})
-
-/* TRANSLATION */
-
-const translations={
-
-en:{
-empresa:"Company",
-servicos:"Services",
-tecnologias:"Technologies",
-contato:"Contact",
-hero_title:"DIGITAL DEFENSE FOR CRITICAL INFRASTRUCTURES",
-hero_desc:"Experts in cybersecurity and network architecture",
-hero_button:"Talk to specialist"
-},
-
-es:{
-empresa:"Empresa",
-servicos:"Servicios",
-tecnologias:"Tecnologías",
-contato:"Contacto",
-hero_title:"DEFENSA DIGITAL PARA INFRAESTRUCTURAS CRÍTICAS",
-hero_desc:"Especialistas en ciberseguridad y arquitectura de redes",
-hero_button:"Hablar con especialista"
-}
-
-}
-
-function setLang(lang){
-
-document.querySelectorAll("[data-i18n]").forEach(el=>{
-
-const key=el.getAttribute("data-i18n")
-
-if(translations[lang] && translations[lang][key]){
-el.innerText=translations[lang][key]
-}
-
-})
-
-}
-
-const browserLang=navigator.language.substring(0,2)
-
-if(browserLang==="en")setLang("en")
-if(browserLang==="es")setLang("es")
-
-</script>
-
+    <div id="particles-js"></div>
+
+    <nav class="fixed w-full bg-black/70 backdrop-blur border-b border-[#182033] z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="h-14 flex items-center logo">
+                <svg width="200" height="50" viewBox="0 0 250 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M30 10L52 18V35C52 46 43 54 30 58C17 54 8 46 8 35V18L30 10Z" fill="#0076F5" fill-opacity="0.1" stroke="#0076F5" stroke-width="2"/>
+                    <path d="M22 30L28 36L38 26" stroke="#0076F5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <text x="65" y="35" font-family="Inter, sans-serif" font-weight="700" font-size="26" fill="#FFFFFF">Phronex<tspan fill="#0076F5">Sec</tspan></text>
+                    <text x="65" y="52" font-family="Inter, sans-serif" font-size="9" fill="#64748B" letter-spacing="2">NETWORK DEFENSE</text>
+                </svg>
+            </div>
+
+            <div class="hidden md:flex gap-6 items-center text-sm">
+                <a href="#empresa" data-i18n="empresa" class="hover:text-blue-500 transition">Empresa</a>
+                <a href="#servicos" data-i18n="servicos" class="hover:text-blue-500 transition">Serviços</a>
+                <a href="#tecnologias" data-i18n="tecnologias" class="hover:text-blue-500 transition">Tecnologias</a>
+                <a href="#contato" data-i18n="contato" class="hover:text-blue-500 transition">Contato</a>
+                <div>
+                    <button onclick="setLang('pt')" class="lang-btn">PT</button>
+                    <button onclick="setLang('en')" class="lang-btn">EN</button>
+                    <button onclick="setLang('es')" class="lang-btn">ES</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="min-h-screen flex items-center pt-32">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+            <div class="fade">
+                <h1 class="text-5xl font-bold leading-tight" data-i18n="hero_title">
+                    DEFESA DIGITAL PARA INFRAESTRUTURAS CRÍTICAS
+                </h1>
+                <p class="mt-6 text-gray-400 text-lg" data-i18n="hero_desc">
+                    Especialistas em segurança cibernética e arquitetura de redes corporativas.
+                </p>
+                <a href="#contato" class="inline-block mt-8 bg-blue-600 hover:bg-blue-500 transition px-8 py-4 rounded-xl font-semibold" data-i18n="hero_button">
+                    Falar com especialista
+                </a>
+            </div>
+            <div class="text-center fade hidden md:block">
+                <svg width="400" height="400" viewBox="0 0 100 100" class="mx-auto logo opacity-40">
+                    <path d="M50 10L85 25V55C85 75 70 90 50 95C30 90 15 75 15 55V25L50 10Z" stroke="#0076F5" stroke-width="0.5" fill="none"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section id="empresa" class="py-28">
+        <div class="max-w-5xl mx-auto px-6 text-center fade">
+            <h2 class="text-4xl font-bold mb-8" data-i18n="quem_somos">Quem Somos</h2>
+            <p class="text-gray-400 leading-relaxed text-lg" data-i18n="empresa_desc">
+                A PhronexSec é uma empresa especializada em cibersegurança e infraestrutura de redes, fundada por engenheiros especialistas em segurança de redes e ex-profissionais da Sophos. Nossa equipe possui mais de 20 anos de experiência em tecnologia da informação, segurança cibernética e operações de redes em ambientes corporativos e infraestruturas críticas na América Latina e Europa.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-24 bg-[#050b16]">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12" data-i18n="diferenciais">Diferenciais</h2>
+            <ul class="grid md:grid-cols-2 gap-6 text-gray-400 text-lg">
+                <li class="flex items-center gap-3"><i class="fa-solid fa-shield-check text-blue-500"></i> <span data-i18n="dif1">Equipe formada por especialistas em Cybersecurity</span></li>
+                <li class="flex items-center gap-3"><i class="fa-solid fa-globe text-blue-500"></i> <span data-i18n="dif2">Ex-engenheiros da Sophos com experiência internacional</span></li>
+                <li class="flex items-center gap-3"><i class="fa-solid fa-network-wired text-blue-500"></i> <span data-i18n="dif3">Experiência em suporte e arquitetura de segurança</span></li>
+                <li class="flex items-center gap-3"><i class="fa-solid fa-code-branch text-blue-500"></i> <span data-i18n="dif4">Conhecimento avançado em defesa cibernética</span></li>
+                <li class="flex items-center gap-3"><i class="fa-solid fa-server text-blue-500"></i> <span data-i18n="dif5">Experiência em infraestruturas críticas</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="servicos" class="py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16" data-i18n="servicos_title">Serviços</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card p-8 rounded-2xl fade">
+                    <h3 class="text-xl font-semibold mb-4 text-blue-500" data-i18n="firewall_title">Gestão Avançada de Firewalls</h3>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li data-i18n="fw1">Configuração de firewalls corporativos</li>
+                        <li data-i18n="fw2">IPS / ATP / AV</li>
+                        <li data-i18n="fw3">WAF / NAT / DNAT</li>
+                        <li data-i18n="fw4">VPN e tunelamento seguro</li>
+                        <li data-i18n="fw5">Hardening de segurança</li>
+                        <li data-i18n="fw6">Monitoramento de logs</li>
+                    </ul>
+                </div>
+                <div class="card p-8 rounded-2xl fade">
+                    <h3 class="text-xl font-semibold mb-4 text-blue-500" data-i18n="infra_title">Infraestrutura de TI</h3>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li data-i18n="infra1">Troubleshooting avançado</li>
+                        <li data-i18n="infra2">Arquitetura de redes</li>
+                        <li data-i18n="infra3">SD-WAN corporativo</li>
+                        <li data-i18n="infra4">Switching L2/L3 e VLAN</li>
+                        <li data-i18n="infra5">Suporte Linux e Windows</li>
+                    </ul>
+                </div>
+                <div class="card p-8 rounded-2xl fade">
+                    <h3 class="text-xl font-semibold mb-4 text-blue-500" data-i18n="monitor_title">Monitoramento de Segurança</h3>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li data-i18n="mon1">Monitoramento de eventos</li>
+                        <li data-i18n="mon2">Análise de logs</li>
+                        <li data-i18n="mon3">Investigação de incidentes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tecnologias" class="py-28">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-10" data-i18n="tecnologias_title">Tecnologias Utilizadas</h2>
+            <div class="logo-slider">
+                <div class="logo-track">
+                    <img src="logos/sophos.png" alt="Sophos">
+                    <img src="logos/cisco.png" alt="Cisco">
+                    <img src="logos/vmware.png" alt="VMware">
+                    <img src="logos/veeam.png" alt="Veeam">
+                    <img src="logos/fortinet.png" alt="Fortinet">
+                    <img src="logos/mikrotik.png" alt="MikroTik">
+                    <img src="logos/sophos.png" alt="Sophos">
+                    <img src="logos/cisco.png" alt="Cisco">
+                    <img src="logos/vmware.png" alt="VMware">
+                    <img src="logos/veeam.png" alt="Veeam">
+                    <img src="logos/fortinet.png" alt="Fortinet">
+                    <img src="logos/mikrotik.png" alt="MikroTik">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="py-28 bg-[#050b16]">
+        <div class="max-w-xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12" data-i18n="contato_title">Contato</h2>
+            <form id="contactForm" action="https://formspree.io/f/mqeybqzg" method="POST" class="space-y-6">
+                <input type="text" name="Nome" placeholder="Nome completo" data-i18n-placeholder="nome" required class="w-full p-4 rounded-lg bg-[#0b1220] border border-[#1f2a44] outline-none focus:border-blue-600 transition">
+                <input type="email" name="Email" placeholder="Email corporativo" data-i18n-placeholder="email" required class="w-full p-4 rounded-lg bg-[#0b1220] border border-[#1f2a44] outline-none focus:border-blue-600 transition">
+                <textarea name="Mensagem" rows="5" placeholder="Mensagem" data-i18n-placeholder="mensagem" required class="w-full p-4 rounded-lg bg-[#0b1220] border border-[#1f2a44] outline-none focus:border-blue-600 transition"></textarea>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 transition p-4 rounded-xl font-bold" data-i18n="enviar">Enviar mensagem</button>
+                <p id="successMsg" class="hidden text-green-400 text-center font-semibold">✔ Mensagem enviada com sucesso</p>
+            </form>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-gray-500 text-sm border-t border-[#182033]">
+        © 2026 PhronexSec • Cybersecurity & Network Defense
+    </footer>
+
+    <script>
+        /* Partículas */
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80 },
+                color: { value: "#0076f5" },
+                shape: { type: "circle" },
+                opacity: { value: 0.4 },
+                size: { value: 2 },
+                line_linked: { enable: true, distance: 150, color: "#0076f5", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 1.5 }
+            }
+        });
+
+        /* Fade Animation */
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("show") })
+        });
+        document.querySelectorAll(".fade").forEach(el => observer.observe(el));
+
+        /* Formulário */
+        const form = document.getElementById("contactForm");
+        const msg = document.getElementById("successMsg");
+
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+            const data = new FormData(form);
+            const btn = form.querySelector('button');
+            btn.innerText = "...";
+
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: data,
+                headers: { Accept: "application/json" }
+            });
+
+            if (response.ok) {
+                msg.classList.remove("hidden");
+                form.reset();
+                btn.innerText = "✔";
+                setTimeout(() => { 
+                    msg.classList.add("hidden"); 
+                    btn.innerText = "Enviar mensagem";
+                }, 4000);
+            }
+        });
+
+        /* Traduções */
+        const translations = {
+            en: {
+                empresa: "Company", servicos: "Services", tecnologias: "Technologies", contato: "Contact",
+                hero_title: "DIGITAL DEFENSE FOR CRITICAL INFRASTRUCTURES",
+                hero_desc: "Experts in cybersecurity and enterprise network architecture",
+                hero_button: "Talk to specialist", quem_somos: "About Us",
+                empresa_desc: "PhronexSec is a specialized company in cybersecurity and network infrastructure, founded by network security expert engineers and former Sophos professionals. Our team has over 20 years of experience in IT, cybersecurity, and network operations in corporate environments and critical infrastructures across Latin America and Europe.",
+                diferenciais: "Key Differentiators",
+                dif1: "Team of Cybersecurity specialists", dif2: "Former Sophos engineers with international experience", dif3: "Experience in security support and architecture", dif4: "Advanced knowledge in cyber defense", dif5: "Experience in critical infrastructures",
+                servicos_title: "Services", firewall_title: "Advanced Firewall Management", infra_title: "IT Infrastructure", monitor_title: "Security Monitoring",
+                tecnologias_title: "Technologies Used", contato_title: "Contact",
+                nome: "Full name", email: "Corporate email", mensagem: "Message", enviar: "Send message"
+            },
+            es: {
+                empresa: "Empresa", servicos: "Servicios", tecnologias: "Tecnologías", contato: "Contacto",
+                hero_title: "DEFENSA DIGITAL PARA INFRAESTRUCTURAS CRÍTICAS",
+                hero_desc: "Especialistas en cibersegurança e arquitectura de redes corporativas",
+                hero_button: "Hablar con especialista", quem_somos: "Quiénes Somos",
+                empresa_desc: "PhronexSec es una empresa especializada en ciberseguridad e infraestructura de redes, fundada por ingenieros expertos en seguridad de redes y ex profesionales de Sophos. Nuestro equipo cuenta con más de 20 años de experiencia en TI, ciberseguridad y operaciones de red en entornos corporativos e infraestructuras críticas en América Latina y Europa.",
+                diferenciais: "Diferenciales",
+                dif1: "Equipo formado por especialistas en Ciberseguridad", dif2: "Ex ingenieros de Sophos con experiencia internacional", dif3: "Experiencia en soporte y arquitectura de seguridad", dif4: "Conocimiento avanzado en defensa cibernética", dif5: "Experiencia en infraestructuras críticas",
+                servicos_title: "Servicios", firewall_title: "Gestión Avanzada de Firewalls", infra_title: "Infraestructura TI", monitor_title: "Monitoreo de Seguridad",
+                tecnologias_title: "Tecnologías Utilizadas", contato_title: "Contacto",
+                nome: "Nombre completo", email: "Correo corporativo", mensagem: "Mensaje", enviar: "Enviar mensaje"
+            }
+        };
+
+        function setLang(lang) {
+            // Reset to PT if default
+            if (lang === 'pt') { location.reload(); return; }
+
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const key = el.getAttribute("data-i18n");
+                if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
+            });
+
+            document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+                const key = el.getAttribute("data-i18n-placeholder");
+                if (translations[lang] && translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+        }
+
+        const browserLang = navigator.language.substring(0, 2);
+        if (browserLang === "en") setLang("en");
+        if (browserLang === "es") setLang("es");
+    </script>
 </body>
+
 </html>
