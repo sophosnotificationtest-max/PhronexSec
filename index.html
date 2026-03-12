@@ -129,9 +129,29 @@ canvas {
 .service-card:hover .arrow-icon { transform: translateX(6px); color: var(--blue); }
 
 /* ── Slider ── */
-.brand-icon { height: 42px; width: auto; filter: grayscale(1) brightness(1.4); transition: .3s; }
-.brand-icon:hover { filter: grayscale(0) brightness(1); }
-.techSlider { display: flex; gap: 70px; width: max-content; align-items: center; animation: slideTech 45s linear infinite; }
+.brand-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity .3s;
+  cursor: default;
+}
+.brand-item:hover { opacity: 1; }
+.brand-item img { height: 38px; width: auto; display: block; }
+.brand-item svg { display: block; }
+.brand-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+.techSlider { display: flex; gap: 60px; width: max-content; align-items: center; animation: slideTech 50s linear infinite; }
 @keyframes slideTech { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
 /* ── Lang buttons ── */
@@ -340,7 +360,7 @@ canvas {
 <!-- ═══════════════ SERVIÇOS ═══════════════ -->
 <section class="py-24 bg-black/40">
   <div class="max-w-7xl mx-auto px-6 text-center">
-    <p class="text-blue-500 text-xs uppercase mb-3" style="font-family:'JetBrains Mono',monospace;letter-spacing:0.2em;font-size:0.7rem;opacity:0.85" data-i18n="servicesLabel">O que fazemos</p>
+
     <h2 data-i18n="servicesTitle" class="text-4xl font-bold mb-4" style="letter-spacing:-0.025em">Principais Serviços</h2>
 
 
@@ -404,38 +424,74 @@ canvas {
 <!-- ═══════════════ TECNOLOGIAS ═══════════════ -->
 <section class="py-24 border-y border-slate-900 overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 text-center mb-16">
-    <h2 class="text-4xl font-bold text-white" style="letter-spacing:-0.025em" data-i18n="techTitle">Parceiros e Tecnologias</h2>
+    <h2 class="text-4xl font-bold text-white" style="letter-spacing:-0.025em" data-i18n="techTitle">Tecnologias</h2>
   </div>
   <div class="relative w-full overflow-hidden">
-    <div class="techSlider">
-      <img src="https://cdn.simpleicons.org/sophos/4161E1" class="brand-icon" title="Sophos">
-      <img src="https://cdn.simpleicons.org/fortinet/ED1C24" class="brand-icon" title="Fortinet">
-      <img src="https://cdn.simpleicons.org/cisco/1BA0D7" class="brand-icon" title="Cisco">
-      <img src="https://cdn.simpleicons.org/vmware/607078" class="brand-icon" title="VMware">
-      <img src="https://cdn.simpleicons.org/mikrotik/FFFFFF" class="brand-icon" title="MikroTik">
-      <img src="https://cdn.simpleicons.org/linux/FCC624" class="brand-icon" title="Linux">
-      <img src="https://cdn.simpleicons.org/redhat/EE0000" class="brand-icon" title="Red Hat">
-      <img src="https://cdn.simpleicons.org/zabbix/D40000" class="brand-icon" title="Zabbix">
-      <img src="https://cdn.simpleicons.org/grafana/F47A20" class="brand-icon" title="Grafana">
-      <img src="https://cdn.simpleicons.org/veeam/00B336" class="brand-icon" title="Veeam">
-      <img src="https://cdn.simpleicons.org/amazonwebservices/FF9900" class="brand-icon" title="AWS">
-      <img src="https://cdn.simpleicons.org/pfsense/212121" class="brand-icon" title="pfSense">
-      <!-- repeat -->
-      <img src="https://cdn.simpleicons.org/sophos/4161E1" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/fortinet/ED1C24" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/cisco/1BA0D7" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/vmware/607078" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/mikrotik/FFFFFF" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/linux/FCC624" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/redhat/EE0000" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/zabbix/D40000" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/grafana/F47A20" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/veeam/00B336" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/amazonwebservices/FF9900" class="brand-icon">
-      <img src="https://cdn.simpleicons.org/pfsense/212121" class="brand-icon">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:100px;background:linear-gradient(to right,#02060c,transparent);z-index:2;pointer-events:none"></div>
+    <div style="position:absolute;right:0;top:0;bottom:0;width:100px;background:linear-gradient(to left,#02060c,transparent);z-index:2;pointer-events:none"></div>
+    <div class="techSlider" id="techSlider">
+
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/sophos/4161E1" alt="Sophos" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#4161E1">Sophos</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/fortinet/EE2024" alt="Fortinet" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#EE2024">Fortinet</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/cisco/049fd9" alt="Cisco" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#049fd9">Cisco</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/vmware/607078" alt="VMware" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#607078">VMware</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/mikrotik/CC0000" alt="MikroTik" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#CC0000">MikroTik</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/linux/FCC624" alt="Linux" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#FCC624">Linux</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/zabbix/D40000" alt="Zabbix" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#D40000">Zabbix</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/grafana/F47A20" alt="Grafana" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#F47A20">Grafana</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/veeam/00B336" alt="Veeam" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#00B336">Veeam</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/amazonwebservices/FF9900" alt="AWS" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#FF9900">AWS</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/pfsense/212121" alt="pfSense" style="filter:invert(1) sepia(1) saturate(3) hue-rotate(185deg)" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#9ca3af">pfSense</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/acronis/EF4136" alt="Acronis" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#EF4136">Acronis</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/wireshark/1679A7" alt="Wireshark" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#1679A7">Wireshark</span>
+      </div>
+      <div class="brand-item">
+        <img src="https://cdn.simpleicons.org/redhat/EE0000" alt="Red Hat" onerror="this.parentElement.style.display='none'">
+        <span class="brand-label" style="color:#EE0000">Red Hat</span>
+      </div>
+
     </div>
   </div>
 </section>
+
 
 <!-- ═══════════════ CONTATO ═══════════════ -->
 <section id="contato" class="py-24">
@@ -653,7 +709,7 @@ const T = {
     svc3Desc: "Event monitoring, log analysis, incident investigation and continuous response.",
     svc3Tag: "Event Monitoring · Log Analysis · Incident Investigation",
     svc3ModalDesc: "We provide continuous visibility into your network health and security. We monitor events in real time, analyze logs and respond to incidents with agility.",
-    techTitle: "Partners & Technologies",
+    techTitle: "Technologies",
     contactTitle: "Talk to our specialists",
     send: "Send Message",
     pName: "Full Name", pEmail: "Corporate Email", pMessage: "How can we help?",
@@ -707,7 +763,7 @@ const T = {
     svc3Desc: "Monitoreo de eventos, análisis de logs, investigación de incidentes y respuesta continua.",
     svc3Tag: "Monitoreo de Eventos · Análisis de Logs · Investigación de Incidentes",
     svc3ModalDesc: "Proporcionamos visibilidad continua sobre la salud y seguridad de su red. Monitoreamos eventos en tiempo real, analizamos logs y respondemos a incidentes con agilidad.",
-    techTitle: "Socios y Tecnologías",
+    techTitle: "Tecnologías",
     contactTitle: "Hable con nuestros especialistas",
     send: "Enviar Mensaje",
     pName: "Nombre Completo", pEmail: "Correo Corporativo", pMessage: "¿Cómo podemos ayudar?",
@@ -761,7 +817,13 @@ function setLang(lang) {
   });
 }
 
-/* ── Formulário ── */
+/* ── Slider infinite clone ── */
+(function(){
+  const slider = document.getElementById('techSlider');
+  if (!slider) return;
+  const clone = slider.innerHTML;
+  slider.innerHTML = clone + clone;
+})();
 const form = document.getElementById('form');
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
