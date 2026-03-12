@@ -1,159 +1,407 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhronexSec | Engenharia de Segurança & Monitoramento de Rede</title>
-    
-    <meta name="description" content="Especialistas em cibersegurança e infraestrutura de redes. Fundada por ex-engenheiros da Sophos com atuação internacional na América Latina e Europa.">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <meta name="description" content="PhronexSec - Cybersecurity • Network Defense • Security Engineering. Proteção profissional de infraestruturas digitais. Firewalls, SD-WAN, Monitoramento 24/7.">
+    <meta name="keywords" content="cibersegurança, firewall Sophos, SD-WAN, monitoramento de rede, segurança cibernética, PhronexSec">
+    <title>PhronexSec • Cybersecurity &amp; Network Defense</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        :root {
-            --primary-blue: #0082ff;
-            --dark-deep: #02060c;
-            --glass-bg: rgba(13, 22, 38, 0.85);
-            --text-main: #e2e8f0;
-            --accent-glow: 0 0 25px rgba(0, 130, 255, 0.4);
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap');
+        
+        :root { --primary: 0 118 245; }
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        .hero-bg {
+            background: radial-gradient(circle at 50% 20%, rgba(0,118,245,0.15) 0%, transparent 70%);
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--dark-deep); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.7; overflow-x: hidden; }
-
-        .hero {
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at center, #0a1f3d 0%, var(--dark-deep) 100%);
-            text-align: center;
-            padding: 20px;
+        
+        .cyber-canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+        
+        .logo-img { filter: drop-shadow(0 0 35px rgb(0 118 245 / 0.6)); }
+        
+        .glass-card {
+            background: rgba(10,17,30,0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0,118,245,0.3);
         }
-
-        .logo-main {
-            max-width: 550px;
-            width: 100%;
-            filter: drop-shadow(var(--accent-glow));
-            margin-bottom: 20px;
+        
+        .neon-text { text-shadow: 0 0 20px rgb(0 118 245); }
+        
+        .service-card:hover { transform: translateY(-15px) scale(1.03); box-shadow: 0 0 40px rgba(0,118,245,0.4); }
+        
+        .nav-link { position: relative; }
+        .nav-link:after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: rgb(var(--primary)); transition: width 0.4s ease; }
+        .nav-link:hover:after { width: 100%; }
+        
+        .form-input {
+            background: rgba(10,17,30,0.9);
+            border: 1px solid rgba(0,118,245,0.3);
         }
-
-        .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; letter-spacing: 4px; color: #fff; text-transform: uppercase; opacity: 0.9; }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
-        h2.section-title { font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 50px; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 2px; }
-
-        /* Sobre */
-        .about-card { background: var(--glass-bg); border: 1px solid rgba(0, 130, 255, 0.2); border-radius: 20px; padding: 40px; backdrop-filter: blur(15px); margin-bottom: 60px; }
-        .about-card p { font-size: 1.1rem; margin-bottom: 20px; text-align: justify; }
-
-        .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; }
-        .stat-box { border-left: 3px solid var(--primary-blue); padding-left: 20px; }
-        .stat-box strong { display: block; font-size: 1.2rem; color: #fff; font-family: 'Orbitron', sans-serif; margin-bottom: 5px; }
-
-        /* Serviços */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
-        .card { 
-            background: linear-gradient(145deg, #0d1626, #070c14); 
-            padding: 35px; border-radius: 20px; border: 1px solid #1a2a44; 
-            transition: 0.3s;
-        }
-        .card:hover { transform: translateY(-8px); border-color: var(--primary-blue); box-shadow: var(--accent-glow); }
-        .card i { font-size: 2.2rem; color: var(--primary-blue); margin-bottom: 20px; }
-        .card h3 { font-family: 'Orbitron', sans-serif; color: #fff; margin-bottom: 15px; font-size: 1.2rem; }
-        .card ul { list-style: none; }
-        .card li { margin-bottom: 10px; font-size: 0.95rem; display: flex; align-items: baseline; }
-        .card li i { font-size: 0.7rem; margin-right: 12px; color: var(--primary-blue); }
-
-        /* Tecnologias */
-        .tech-wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 40px auto; max-width: 900px; }
-        .badge { background: #0d1626; border: 1px solid #1a2a44; color: #fff; padding: 8px 16px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; }
-
-        footer { background: #010409; padding: 60px 20px; text-align: center; border-top: 1px solid #1a2a44; }
-        .contact-btn { display: inline-block; padding: 15px 35px; background: var(--primary-blue); color: #fff; text-decoration: none; border-radius: 4px; font-weight: bold; font-family: 'Orbitron', sans-serif; transition: 0.3s; margin-top: 25px; }
-        .contact-btn:hover { filter: brightness(1.2); }
-
-        @media (max-width: 768px) { .services-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
-<body>
+<body class="bg-[#02060c] text-[#e2e8f0] overflow-x-hidden">
 
-    <header class="hero">
-        <img src="logo.png" alt="PhronexSec Logo" class="logo-main">
-        <h1>Cybersecurity • Network Defense • Security Engineering [cite: 1]</h1>
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 bg-[#02060c]/95 backdrop-blur-xl border-b border-[#1a2a44] z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <img src="phronexsec-logo.png" alt="PhronexSec Logo" class="logo-img h-12 w-auto">
+            
+            <div class="hidden md:flex items-center gap-x-10 text-sm font-medium">
+                <a href="#sobre" class="nav-link">Quem Somos</a>
+                <a href="#diferenciais" class="nav-link">Diferenciais</a>
+                <a href="#servicos" class="nav-link">Serviços</a>
+                <a href="#tecnologias" class="nav-link">Tecnologias</a>
+                <a href="#contato" class="nav-link">Contato</a>
+            </div>
+            
+            <a href="https://wa.me/SEUNUMERO" target="_blank" 
+               class="hidden md:flex items-center gap-x-3 bg-[#0076f5] hover:bg-[#0055cc] px-8 py-4 rounded-2xl font-semibold shadow-lg shadow-[#0076f5]/40 transition">
+                <i class="fa-solid fa-whatsapp text-xl"></i> WHATSAPP
+            </a>
+            
+            <button id="mobile-btn" class="md:hidden text-3xl text-[#0076f5]">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero-bg relative min-h-screen flex items-center overflow-hidden">
+        <canvas id="cyber-canvas" class="cyber-canvas"></canvas>
+        
+        <div class="max-w-7xl mx-auto px-6 text-center relative z-10 pt-20">
+            <img src="phronexsec-logo.png" alt="PhronexSec" class="mx-auto mb-8 logo-img h-32 w-auto">
+            
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-white neon-text leading-none">
+                PROTEÇÃO DIGITAL<br>FUTURISTA
+            </h1>
+            <p class="mt-6 max-w-2xl mx-auto text-xl text-[#94a3b8]">
+                Cybersecurity • Network Defense • Security Engineering<br>
+                Especialistas em segurança de redes e infraestruturas críticas
+            </p>
+            
+            <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contato" class="bg-[#0076f5] hover:bg-[#0060cc] transition-all px-12 py-6 rounded-3xl text-lg font-semibold flex items-center justify-center gap-x-3">
+                    <i class="fa-solid fa-shield-halved"></i> SOLICITAR CONSULTA
+                </a>
+                <a href="#servicos" class="border-2 border-[#0076f5] hover:bg-[#0076f5]/10 transition-all px-12 py-6 rounded-3xl text-lg font-semibold">
+                    CONHEÇA NOSSOS SERVIÇOS
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute inset-0 bg-[repeating-linear-gradient(transparent,transparent_4px,rgba(0,118,245,0.03)_4px,rgba(0,118,245,0.03)_5px)] pointer-events-none"></div>
     </header>
 
-    <div class="container">
-        <section class="about-card">
-            <h2 class="section-title">Quem Somos [cite: 3]</h2>
-            <p>A <strong>PhronexSec</strong> é uma empresa especializada em cibersegurança e infraestrutura de redes, fundada por engenheiros especialistas em segurança de redes e <strong>ex-profissionais da Sophos</strong>[cite: 4].</p>
-            <p>Nossa equipe possui <strong>mais de 20 anos de experiência</strong> atuando em ambientes corporativos e infraestruturas críticas na América Latina e Europa[cite: 5]. Integramos experiência prática com pesquisa acadêmica avançada, incluindo <strong>doutorado em Telemática</strong> e sistemas inteligentes[cite: 6].</p>
-            
-            <div class="highlights">
-                <div class="stat-box"><strong>Expertise Internacional [cite: 9]</strong> Vivência técnica em múltiplos mercados.</div>
-                <div class="stat-box"><strong>Foco Acadêmico [cite: 6]</strong> Soluções baseadas em pesquisa avançada.</div>
-                <div class="stat-box"><strong>Infraestrutura Crítica [cite: 12]</strong> Defesa de ambientes de alta complexidade.</div>
+    <!-- QUEM SOMOS -->
+    <section id="sobre" class="py-28 bg-[#0a111e]">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-x-3 bg-[#0076f5]/10 text-[#0076f5] px-6 py-3 rounded-3xl text-sm font-medium mb-6">QUEM SOMOS</div>
+                    <h2 class="text-5xl font-semibold text-white tracking-tighter">Especialistas em cibersegurança e infraestrutura de redes</h2>
+                    <div class="mt-10 space-y-8 text-lg text-[#94a3b8]">
+                        <p>A PhronexSec é uma empresa especializada em cibersegurança e infraestrutura de redes, fundada por engenheiros especialistas em segurança de redes e ex-profissionais da Sophos.</p>
+                        <p>Nossa equipe possui mais de 20 anos de experiência em tecnologia da informação, segurança cibernética e operações de redes, atuando em ambientes corporativos e infraestruturas críticas na América Latina e Europa.</p>
+                        <p>Integramos experiência prática com pesquisa acadêmica avançada, incluindo doutorado em Telemática e sistemas inteligentes aplicados a ambientes conectados.</p>
+                    </div>
+                </div>
+                <div class="glass-card p-12 rounded-3xl text-center">
+                    <div class="text-7xl mb-6">🛡️</div>
+                    <div class="text-3xl font-semibold">+20 ANOS</div>
+                    <div class="text-[#0076f5] mt-2">América Latina • Europa</div>
+                </div>
             </div>
-        </section>
-
-        <h2 class="section-title">Nossos Serviços [cite: 13]</h2>
-        <div class="services-grid">
-            <article class="card">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Gestão de Firewalls [cite: 15]</h3>
-                <ul>
-                    <li><i class="fas fa-caret-right"></i> Implementação de políticas IPS/ATP/AV [cite: 18]</li>
-                    <li><i class="fas fa-caret-right"></i> Configuração WAF, NAT, DNAT e MTA [cite: 19]</li>
-                    <li><i class="fas fa-caret-right"></i> VPN e Tunnels de comunicação segura [cite: 20]</li>
-                    <li><i class="fas fa-caret-right"></i> Hardening de segurança de rede [cite: 21]</li>
-                </ul>
-            </article>
-
-            <article class="card">
-                <i class="fas fa-network-wired"></i>
-                <h3>Infraestrutura de TI [cite: 23]</h3>
-                <ul>
-                    <li><i class="fas fa-caret-right"></i> Troubleshooting avançado de redes [cite: 24]</li>
-                    <li><i class="fas fa-caret-right"></i> Desenho e implementação SD-WAN [cite: 26]</li>
-                    <li><i class="fas fa-caret-right"></i> Switching L2/L3 e VLANs [cite: 28]</li>
-                    <li><i class="fas fa-caret-right"></i> Virtualização e Backup (VMware/Veeam) [cite: 30]</li>
-                </ul>
-            </article>
-
-            <article class="card">
-                <i class="fas fa-chart-area"></i>
-                <h3>Monitoramento de Rede </h3>
-                <ul>
-                    <li><i class="fas fa-caret-right"></i> Monitoramento contínuo de eventos [cite: 33]</li>
-                    <li><i class="fas fa-caret-right"></i> Análise profunda de logs de rede [cite: 34]</li>
-                    <li><i class="fas fa-caret-right"></i> Investigação técnica de incidentes [cite: 35]</li>
-                    <li><i class="fas fa-caret-right"></i> Diagnóstico e otimização SNMP [cite: 49]</li>
-                </ul>
-            </article>
-        </div>
-    </div>
-
-    <section class="container" style="padding-top: 0; text-align: center;">
-        <h2 class="section-title">Ecosistema Tecnológico [cite: 36]</h2>
-        <div class="tech-wrap">
-            <span class="badge">SOPHOS [cite: 37]</span>
-            <span class="badge">FORTINET [cite: 44]</span>
-            <span class="badge">CISCO [cite: 45]</span>
-            <span class="badge">MIKROTIK [cite: 46]</span>
-            <span class="badge">PFSENSE [cite: 43]</span>
-            <span class="badge">VMWARE [cite: 41]</span>
-            <span class="badge">LINUX & WINDOWS SERVER [cite: 47]</span>
-            <span class="badge">ZABBIX & GRAFANA [cite: 48]</span>
         </div>
     </section>
 
-    <footer>
-        <h2 class="section-title" style="color:#fff">Objetivo [cite: 50]</h2>
-        <p>Proteger sua infraestrutura digital com soluções eficientes, acessíveis e adaptadas[cite: 51].</p>
-        <a href="mailto:contato@phronexsec.com" class="contact-btn">SOLICITAR CONSULTORIA TÉCNICA</a>
-        <p style="margin-top: 50px; font-size: 0.8rem; opacity: 0.5;">© 2026 PhronexSec. Todos os direitos reservados.</p>
+    <!-- DIFERENCIAIS -->
+    <section id="diferenciais" class="py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-[#0076f5] tracking-widest text-sm">POR QUE ESCOLHER PHRONEXSEC</span>
+                <h2 class="text-5xl font-semibold text-white mt-3">Nossos diferenciais</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-10 rounded-3xl">
+                    <i class="fa-solid fa-user-tie text-5xl text-[#0076f5]"></i>
+                    <h3 class="text-2xl font-semibold mt-8">Equipe Especializada</h3>
+                    <ul class="mt-6 space-y-4 text-[#94a3b8]">
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-[#0076f5]"></i> Ex-engenheiros da Sophos</li>
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-[#0076f5]"></i> Experiência internacional</li>
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-[#0076f5]"></i> Conhecimento avançado em redes</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-10 rounded-3xl">
+                    <i class="fa-solid fa-shield-halved text-5xl text-[#0076f5]"></i>
+                    <h3 class="text-2xl font-semibold mt-8">Segurança Real</h3>
+                    <ul class="mt-6 space-y-4 text-[#94a3b8]">
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-[#0076f5]"></i> Hardening avançado</li>
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-[#0076f5]"></i> IPS + ATP + AV 24/7</li>
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-[#0076f5]"></i> Monitoramento proativo</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-10 rounded-3xl">
+                    <i class="fa-solid fa-rocket text-5xl text-[#0076f5]"></i>
+                    <h3 class="text-2xl font-semibold mt-8">Soluções Acessíveis</h3>
+                    <ul class="mt-6 space-y-4 text-[#94a3b8]">
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-[#0076f5]"></i> Suporte especializado</li>
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-[#0076f5]"></i> SD-WAN &amp; Virtualização</li>
+                        <li class="flex gap-3"><i class="fa-solid fa-check text-[#0076f5]"></i> Atendimento personalizado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section id="servicos" class="py-28 bg-[#0a111e]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-[#0076f5]">SERVIÇOS PREMIUM</span>
+                <h2 class="text-5xl font-semibold text-white mt-3">Proteção completa em 3 pilares</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="service-card glass-card p-10 rounded-3xl transition-all">
+                    <div class="text-6xl mb-6">🔥</div>
+                    <h3 class="text-3xl font-semibold">Gestão Avançada de Firewalls</h3>
+                    <ul class="mt-8 space-y-4 text-sm text-[#94a3b8]">
+                        <li>• Configuração corporativa Sophos / Fortinet / pfSense</li>
+                        <li>• Soluções anti-Spam e virtualização</li>
+                        <li>• IPS / ATP / AV / WAF / NAT / DNAT / MTA</li>
+                        <li>• VPN / Tunnel + Hardening</li>
+                        <li>• Monitoramento de logs e relatórios</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card glass-card p-10 rounded-3xl transition-all">
+                    <div class="text-6xl mb-6">🌐</div>
+                    <h3 class="text-3xl font-semibold">Suporte Especializado em Infraestrutura</h3>
+                    <ul class="mt-8 space-y-4 text-sm text-[#94a3b8]">
+                        <li>• Desenho e implementação de redes</li>
+                        <li>• SD-WAN completo</li>
+                        <li>• Switching L2/L3 + VLANs</li>
+                        <li>• Servidores Linux / Windows + Virtualização</li>
+                        <li>• Troubleshooting avançado e otimização</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card glass-card p-10 rounded-3xl transition-all">
+                    <div class="text-6xl mb-6">📡</div>
+                    <h3 class="text-3xl font-semibold">Monitoramento de Segurança 24/7</h3>
+                    <ul class="mt-8 space-y-4 text-sm text-[#94a3b8]">
+                        <li>• Monitoramento contínuo de eventos</li>
+                        <li>• Análise profunda de logs</li>
+                        <li>• Investigação de incidentes</li>
+                        <li>• Zabbix + Grafana + Wireshark + SNMP</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECNOLOGIAS -->
+    <section id="tecnologias" class="py-28">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-5xl font-semibold text-white">Tecnologias que dominamos</h2>
+            <div class="mt-16 flex flex-wrap justify-center gap-6">
+                <span class="glass-card px-8 py-5 rounded-3xl text-sm font-medium">Sophos Firewall • Central • Endpoint</span>
+                <span class="glass-card px-8 py-5 rounded-3xl text-sm font-medium">Fortinet</span>
+                <span class="glass-card px-8 py-5 rounded-3xl text-sm font-medium">Cisco</span>
+                <span class="glass-card px-8 py-5 rounded-3xl text-sm font-medium">MikroTik</span>
+                <span class="glass-card px-8 py-5 rounded-3xl text-sm font-medium">pfSense</span>
+                <span class="glass-card px-8 py-5 rounded-3xl text-sm font-medium">VMware • Veeam • Acronis</span>
+                <span class="glass-card px-8 py-5 rounded-3xl text-sm font-medium">Linux &amp; Windows Server</span>
+                <span class="glass-card px-8 py-5 rounded-3xl text-sm font-medium">Zabbix • Grafana • Wireshark • SNMP</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="py-28 bg-[#02060c]">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-semibold text-white">Entre em contato</h2>
+                <p class="mt-6 text-xl text-[#94a3b8]">Resposta em até 2 horas úteis • Orçamento sem compromisso</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16">
+                <!-- Formulário de Email -->
+                <div class="glass-card p-10 rounded-3xl">
+                    <h3 class="text-2xl font-semibold mb-8 flex items-center gap-x-3">
+                        <i class="fa-solid fa-envelope text-[#0076f5]"></i>
+                        Enviar mensagem por email
+                    </h3>
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <input type="text" id="nome" placeholder="Seu nome" 
+                                   class="form-input w-full px-6 py-5 rounded-2xl text-white placeholder:text-[#64748b] focus:outline-none focus:border-[#0076f5]" required>
+                        </div>
+                        <div>
+                            <input type="email" id="email" placeholder="Seu email" 
+                                   class="form-input w-full px-6 py-5 rounded-2xl text-white placeholder:text-[#64748b] focus:outline-none focus:border-[#0076f5]" required>
+                        </div>
+                        <div>
+                            <textarea id="mensagem" rows="5" placeholder="Descreva sua necessidade (ex: firewall, SD-WAN, monitoramento...)" 
+                                      class="form-input w-full px-6 py-5 rounded-3xl text-white placeholder:text-[#64748b] focus:outline-none focus:border-[#0076f5]" required></textarea>
+                        </div>
+                        <button type="submit"
+                                class="w-full bg-white text-black hover:bg-[#0076f5] hover:text-white transition-all py-6 text-lg font-semibold rounded-3xl">
+                            ENVIAR MENSAGEM
+                        </button>
+                    </form>
+                </div>
+
+                <!-- WhatsApp Rápido -->
+                <div class="flex flex-col justify-center items-center text-center">
+                    <div class="text-7xl mb-6">📲</div>
+                    <h3 class="text-3xl font-semibold mb-4">Ou fale direto no WhatsApp</h3>
+                    <a href="https://wa.me/SEUNUMERO" target="_blank"
+                       class="inline-flex items-center gap-x-4 bg-[#25D366] hover:bg-[#128C7E] transition-all text-black text-2xl font-semibold px-16 py-8 rounded-3xl shadow-2xl">
+                        <i class="fa-solid fa-whatsapp text-5xl"></i>
+                        <div>CLIQUE AQUI</div>
+                    </a>
+                    <p class="mt-8 text-sm text-[#64748b]">Resposta imediata • Atendimento em português</p>
+                </div>
+            </div>
+
+            <div class="mt-20 text-center text-sm text-[#64748b]">
+                📧 <a href="mailto:contato@phronexsec.com.br" class="hover:text-[#0076f5]">contato@phronexsec.com.br</a><br>
+                📍 Brasil • Atendemos América Latina e Europa
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black py-12 border-t border-[#1a2a44]">
+        <div class="max-w-7xl mx-auto px-6 text-center text-xs text-[#64748b]">
+            © 2026 PhronexSec Cybersecurity • Todos os direitos reservados<br>
+            Protegendo empresas com soluções de segurança eficientes e acessíveis
+        </div>
     </footer>
 
+    <script>
+        tailwind.config = { content: [] };
+
+        // Mobile menu
+        const mobileBtn = document.getElementById('mobile-btn');
+        let mobileMenuHTML = `
+            <div class="fixed inset-0 bg-[#02060c] z-50 hidden flex-col items-center justify-center gap-y-8 text-2xl" id="mobile-menu">
+                <a href="#sobre" class="hover:text-[#0076f5]">Quem Somos</a>
+                <a href="#diferenciais" class="hover:text-[#0076f5]">Diferenciais</a>
+                <a href="#servicos" class="hover:text-[#0076f5]">Serviços</a>
+                <a href="#tecnologias" class="hover:text-[#0076f5]">Tecnologias</a>
+                <a href="#contato" class="hover:text-[#0076f5]">Contato</a>
+                <a href="https://wa.me/SEUNUMERO" target="_blank" class="mt-8 bg-[#25D366] text-black px-12 py-5 rounded-3xl">WhatsApp</a>
+            </div>`;
+        document.body.insertAdjacentHTML('beforeend', mobileMenuHTML);
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileBtn.innerHTML = mobileMenu.classList.contains('hidden') ? 
+                '<i class="fa-solid fa-bars"></i>' : '<i class="fa-solid fa-xmark"></i>';
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    if (!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Formulário de Email
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = 'ENVIANDO...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                alert('✅ Mensagem enviada com sucesso!\n\nNossa equipe entrará em contato por email ou WhatsApp em até 2 horas.');
+                this.reset();
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 1400);
+        });
+
+        // ANIMAÇÃO CYBER
+        const canvas = document.getElementById('cyber-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() { this.x += this.speedX; this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0,118,245,0.8)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 120; i++) particles.push(new Particle());
+        }
+        
+        function connectParticles() {
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    const dx = particles[a].x - particles[b].x;
+                    const dy = particles[a].y - particles[b].y;
+                    const distance = Math.sqrt(dx*dx + dy*dy);
+                    if (distance < 140) {
+                        ctx.strokeStyle = `rgba(0,118,245,${1 - distance/140})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+        
+        initParticles();
+        animate();
+        window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+    </script>
 </body>
 </html>
