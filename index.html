@@ -23,6 +23,7 @@
 }
 
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--dark);
@@ -315,16 +316,49 @@ canvas {
 <canvas id="bg"></canvas>
 
 <!-- ═══════════════ HEADER ═══════════════ -->
+<style>
+.nav-link {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: color .25s, background .25s;
+  white-space: nowrap;
+}
+.nav-link:hover {
+  color: #fff;
+  background: rgba(0,118,245,0.12);
+}
+/* Hide nav on very small screens */
+@media (max-width: 560px) { .nav-center { display: none !important; } }
+</style>
 <header class="fixed w-full bg-black/40 backdrop-blur-md border-b border-blue-900/40 z-50">
-  <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-    <div class="logo-wrap" id="logo-wrap-header">
-      <img src="phronexsec-logo.png" class="logoGlow" alt="PhronexSec Logo" fetchpriority="high" decoding="sync" loading="eager" style="height:clamp(72px,10vw,120px);width:auto;max-width:360px;object-fit:contain">
+  <div class="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center gap-4">
+
+    <!-- Logo -->
+    <div class="logo-wrap flex-shrink-0" id="logo-wrap-header">
+      <img src="phronexsec-logo.png" class="logoGlow" alt="PhronexSec Logo" fetchpriority="high" decoding="sync" loading="eager" style="height:clamp(52px,7vw,80px);width:auto;max-width:260px;object-fit:contain">
     </div>
-    <div class="flex gap-5">
+
+    <!-- Nav central -->
+    <nav class="nav-center flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+      <a href="#sobre" class="nav-link" data-i18n="navAbout">Quem Somos</a>
+      <span class="text-slate-700 text-xs select-none">|</span>
+      <a href="#servicos" class="nav-link" data-i18n="navServices">Serviços</a>
+      <span class="text-slate-700 text-xs select-none">|</span>
+      <a href="#contato" class="nav-link" data-i18n="navContact">Contato</a>
+    </nav>
+
+    <!-- Lang buttons -->
+    <div class="flex gap-4 flex-shrink-0">
       <button onclick="setLang('pt')" class="lang-btn active" id="btn-pt">PT</button>
       <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
       <button onclick="setLang('es')" class="lang-btn" id="btn-es">ES</button>
     </div>
+
   </div>
 </header>
 
@@ -332,7 +366,7 @@ canvas {
 <section class="min-h-screen flex items-center text-center pt-28">
   <div class="max-w-5xl mx-auto px-6">
     <div class="logo-wrap mx-auto mb-10" style="display:block;text-align:center">
-      <img src="phronexsec-logo.png" class="mx-auto logoHero logoGlow" alt="PhronexSec" fetchpriority="high" decoding="sync" loading="eager" style="height:clamp(420px,55vw,700px);width:auto">
+      <img src="phronexsec-logo.png" class="mx-auto logoHero logoGlow" alt="PhronexSec" fetchpriority="high" decoding="sync" loading="eager" style="height:clamp(280px,40vw,500px);width:auto">
     </div>
     <div class="mb-10 space-y-5">
       <p class="neon-label">Cybersecurity</p>
@@ -347,7 +381,7 @@ canvas {
 </section>
 
 <!-- ═══════════════ SOBRE ═══════════════ -->
-<section class="py-24 border-t border-slate-900">
+<section id="sobre" class="py-24 border-t border-slate-900">
   <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
     <div>
       <h2 data-i18n="aboutTitle" class="text-3xl font-semibold mb-6 text-blue-400" style="letter-spacing:-0.02em">Quem Somos</h2>
@@ -365,7 +399,7 @@ canvas {
 </section>
 
 <!-- ═══════════════ SERVIÇOS ═══════════════ -->
-<section class="py-24 bg-black/40">
+<section id="servicos" class="py-24 bg-black/40">
   <div class="max-w-7xl mx-auto px-6 text-center">
 
     <h2 data-i18n="servicesTitle" class="text-4xl font-bold mb-4" style="letter-spacing:-0.025em">Principais Serviços</h2>
@@ -660,6 +694,7 @@ document.addEventListener('keydown', e => {
 /* ── Traduções ── */
 const T = {
   en: {
+    navAbout: "About Us", navServices: "Services", navContact: "Contact",
     hero: "Network Defense <span class='text-blue-500/70'>&amp;</span> Security Engineering",
     heroSub: "Experts in cybersecurity and defense of critical digital infrastructures across LATAM and Europe.",
     aboutTitle: "About Us",
@@ -714,6 +749,7 @@ const T = {
     soc6: "Traffic analysis and packet capture with Wireshark",
   },
   es: {
+    navAbout: "Quiénes Somos", navServices: "Servicios", navContact: "Contacto",
     hero: "Defensa de Redes <span class='text-blue-500/70'>&amp;</span> Ingeniería de Seguridad",
     heroSub: "Especialistas en ciberseguridad y defensa de infraestructuras digitales críticas en LATAM y Europa.",
     aboutTitle: "Quiénes Somos",
