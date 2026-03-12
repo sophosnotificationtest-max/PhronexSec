@@ -241,10 +241,14 @@ canvas {
 <section class="min-h-screen flex items-center text-center pt-24">
   <div class="max-w-5xl mx-auto px-6">
     <img src="phronexsec-logo.png" class="mx-auto h-64 md:h-80 logoHero logoGlow mb-12" alt="PhronexSec">
-    <h1 data-i18n="hero" class="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight leading-tight">
-      Cybersecurity • Network Defense • Security Engineering
-    </h1>
-    <p data-i18n="heroSub" class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
+    <div class="mb-10 space-y-3">
+      <p class="text-xs font-mono tracking-[0.25em] uppercase text-blue-500 opacity-80">Cybersecurity</p>
+      <h1 data-i18n="hero" class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+        Network Defense<br>
+        <span class="text-blue-500">&amp;</span> Security Engineering
+      </h1>
+    </div>
+    <p data-i18n="heroSub" class="text-base md:text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
       Especialistas em segurança cibernética e defesa de infraestruturas digitais críticas na América Latina e Europa.
     </p>
   </div>
@@ -561,7 +565,7 @@ document.addEventListener('keydown', e => {
 /* ── Traduções ── */
 const T = {
   en: {
-    hero: "Cybersecurity • Network Defense • Security Engineering",
+    hero: "Network Defense<br><span class='text-blue-500'>&amp;</span> Security Engineering",
     heroSub: "Experts in cybersecurity and defense of critical digital infrastructures across LATAM and Europe.",
     aboutTitle: "About Us",
     aboutText: "PhronexSec is specialized in cybersecurity and network infrastructure, founded by engineers and former Sophos professionals. Our team has over 20 years of experience in IT, cybersecurity and network operations, working in corporate environments and critical infrastructures across Latin America and Europe. The company also integrates advanced academic research, including a PhD in Telematics and intelligent systems.",
@@ -615,7 +619,7 @@ const T = {
     soc6: "Traffic analysis and packet capture with Wireshark",
   },
   es: {
-    hero: "Ciberseguridad • Defensa de Redes • Ingeniería de Seguridad",
+    hero: "Defensa de Redes<br><span class='text-blue-500'>&amp;</span> Ingeniería de Seguridad",
     heroSub: "Especialistas en ciberseguridad y defensa de infraestructuras digitales críticas en LATAM y Europa.",
     aboutTitle: "Quiénes Somos",
     aboutText: "PhronexSec se especializa en ciberseguridad e infraestructura de redes, fundada por ingenieros y ex profesionales de Sophos. Nuestro equipo cuenta con más de 20 años de experiencia en TI, ciberseguridad y operaciones de redes, trabajando en entornos corporativos e infraestructuras críticas en América Latina y Europa.",
