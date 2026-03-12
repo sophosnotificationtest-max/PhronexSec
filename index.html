@@ -313,7 +313,7 @@ canvas {
 <!-- ═══════════════ HEADER ═══════════════ -->
 <header class="fixed w-full bg-black/40 backdrop-blur-md border-b border-blue-900/40 z-50">
   <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-    <img src="phronexsec-logo.png" class="h-16 md:h-20 logoGlow" alt="PhronexSec Logo" fetchpriority="high" decoding="async">
+    <img src="phronexsec-logo.png" class="h-10 md:h-12 logoGlow" alt="PhronexSec Logo" fetchpriority="high" decoding="async" style="width:auto;max-width:180px;object-fit:contain">
     <div class="flex gap-5">
       <button onclick="setLang('pt')" class="lang-btn active" id="btn-pt">PT</button>
       <button onclick="setLang('en')" class="lang-btn" id="btn-en">EN</button>
@@ -502,9 +502,10 @@ canvas {
   <div class="max-w-2xl mx-auto px-6">
     <h2 data-i18n="contactTitle" class="text-3xl font-semibold text-center mb-10" style="letter-spacing:-0.02em">Fale com nossos especialistas</h2>
     <form id="form" action="https://formspree.io/f/mqeybqzg" method="POST" class="space-y-4">
-      <input name="name" required placeholder="Nome" data-i18n-placeholder="pName" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg focus:border-blue-500 focus:outline-none transition">
-      <input name="email" required type="email" placeholder="Email Corporativo" data-i18n-placeholder="pEmail" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg focus:border-blue-500 focus:outline-none transition">
-      <textarea name="message" required placeholder="Mensagem" data-i18n-placeholder="pMessage" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg h-32 focus:border-blue-500 focus:outline-none transition resize-none"></textarea>
+      <input name="name" placeholder="Nome" data-i18n-placeholder="pName" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg focus:border-blue-500 focus:outline-none transition">
+      <input name="email" required type="email" placeholder="Email Corporativo *" data-i18n-placeholder="pEmail" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg focus:border-blue-500 focus:outline-none transition">
+      <input name="phone" id="phone" required type="tel" placeholder="Telefone / WhatsApp *" data-i18n-placeholder="pPhone" maxlength="20" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg focus:border-blue-500 focus:outline-none transition" style="font-family:'JetBrains Mono',monospace;letter-spacing:0.05em">
+      <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="pMessage" class="w-full p-4 bg-slate-900 border border-slate-800 rounded-lg h-32 focus:border-blue-500 focus:outline-none transition resize-none"></textarea>
       <button type="submit" class="bg-blue-600 hover:bg-blue-500 w-full py-4 rounded-lg font-bold text-white transition shadow-lg shadow-blue-900/20">
         <span data-i18n="send">Enviar Mensagem</span>
       </button>
@@ -677,7 +678,7 @@ const T = {
     techTitle: "Technologies",
     contactTitle: "Talk to our specialists",
     send: "Send Message",
-    pName: "Full Name", pEmail: "Corporate Email", pMessage: "How can we help?",
+    pName: "Full Name", pEmail: "Corporate Email", pPhone: "Phone / WhatsApp *", pMessage: "How can we help?",
     footerSub: "Defense of Critical Infrastructures",
     featuresLabel: "Features & Deliverables",
     techLabel: "Technologies",
@@ -731,7 +732,7 @@ const T = {
     techTitle: "Tecnologías",
     contactTitle: "Hable con nuestros especialistas",
     send: "Enviar Mensaje",
-    pName: "Nombre Completo", pEmail: "Correo Corporativo", pMessage: "¿Cómo podemos ayudar?",
+    pName: "Nombre Completo", pEmail: "Correo Corporativo", pPhone: "Teléfono / WhatsApp *", pMessage: "¿Cómo podemos ayudar?",
     footerSub: "Defensa de Infraestructuras Críticas",
     featuresLabel: "Funcionalidades y Entregas",
     techLabel: "Tecnologías",
@@ -782,7 +783,35 @@ function setLang(lang) {
   });
 }
 
-/* ── Slider infinite clone ── */
+/* ── Máscara telefone ── */
+(function(){
+  const phone = document.getElementById('phone');
+  if (!phone) return;
+  phone.addEventListener('input', function(e) {
+    let v = this.value.replace(/\D/g, '');
+    if (v.length === 0) { this.value = ''; return; }
+    // Detect if starts with country code (55 = BR)
+    let out = '';
+    if (v.length <= 11) {
+      // BR format: (XX) XXXXX-XXXX or (XX) XXXX-XXXX
+      if (v.length <= 2)        out = '(' + v;
+      else if (v.length <= 6)   out = '(' + v.slice(0,2) + ') ' + v.slice(2);
+      else if (v.length <= 10)  out = '(' + v.slice(0,2) + ') ' + v.slice(2,6) + '-' + v.slice(6);
+      else                      out = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7,11);
+    } else {
+      // International: +XX (XX) XXXXX-XXXX
+      out = '+' + v.slice(0,2) + ' (' + v.slice(2,4) + ') ' + v.slice(4,9) + '-' + v.slice(9,13);
+    }
+    this.value = out;
+  });
+  phone.addEventListener('keydown', function(e) {
+    if (e.key === 'Backspace') {
+      // Allow clean deletion
+      let v = this.value;
+      if (/[\s\-\(\)]$/.test(v)) this.value = v.slice(0, -1);
+    }
+  });
+})();
 (function(){
   const slider = document.getElementById('techSlider');
   if (!slider) return;
@@ -833,6 +862,193 @@ function animate() {
   requestAnimationFrame(animate);
 }
 animate();
+</script>
+
+<!-- ═══════════════ COOKIE CONSENT ═══════════════ -->
+<style>
+#cookie-banner {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  z-index: 9999;
+  width: calc(100% - 48px);
+  max-width: 780px;
+  background: linear-gradient(135deg, #0a1223ee, #060e1cee);
+  border: 1px solid rgba(0,118,245,0.35);
+  border-radius: 18px;
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 24px 60px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,118,245,0.08), inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
+  transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .5s ease;
+  opacity: 0;
+}
+#cookie-banner.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+#cookie-banner.hide {
+  transform: translateX(-50%) translateY(140px);
+  opacity: 0;
+}
+.cookie-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(0,118,245,0.12);
+  border: 1px solid rgba(0,118,245,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+}
+.cookie-text {
+  flex: 1;
+  min-width: 0;
+}
+.cookie-text strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.cookie-text p {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 300;
+  line-height: 1.55;
+  margin: 0;
+}
+.cookie-text a {
+  color: #3b82f6;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color .2s;
+}
+.cookie-text a:hover { color: #60a5fa; }
+.cookie-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+  align-items: center;
+}
+.cookie-btn-accept {
+  padding: 10px 22px;
+  border-radius: 10px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: .25s;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+.cookie-btn-accept:hover {
+  background: #2d8fff;
+  box-shadow: 0 6px 20px rgba(0,118,245,0.4);
+  transform: translateY(-1px);
+}
+.cookie-btn-decline {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(100,116,139,0.25);
+  cursor: pointer;
+  transition: .25s;
+  white-space: nowrap;
+}
+.cookie-btn-decline:hover {
+  color: #94a3b8;
+  border-color: rgba(100,116,139,0.5);
+}
+
+@media (max-width: 600px) {
+  #cookie-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    bottom: 16px;
+  }
+  .cookie-actions { width: 100%; }
+  .cookie-btn-accept { flex: 1; text-align: center; }
+}
+</style>
+
+<div id="cookie-banner" role="dialog" aria-label="Aviso de cookies">
+  <div class="cookie-icon">🍪</div>
+  <div class="cookie-text">
+    <strong data-i18n="cookieTitle">Utilizamos cookies</strong>
+    <p data-i18n="cookieText">Usamos cookies para melhorar sua experiência, analisar o tráfego e personalizar conteúdo. Ao continuar, você concorda com nossa <a href="#" onclick="return false">Política de Privacidade</a>.</p>
+  </div>
+  <div class="cookie-actions">
+    <button class="cookie-btn-decline" id="cookie-decline" data-i18n="cookieDecline">Recusar</button>
+    <button class="cookie-btn-accept" id="cookie-accept" data-i18n="cookieAccept">Aceitar tudo</button>
+  </div>
+</div>
+
+<script>
+/* ── Cookie Consent ── */
+(function(){
+  const COOKIE_KEY = 'phronexsec_cookie_consent';
+
+  const banner  = document.getElementById('cookie-banner');
+  const btnOk   = document.getElementById('cookie-accept');
+  const btnNo   = document.getElementById('cookie-decline');
+
+  // Translations for cookie banner
+  const cookieT = {
+    en: {
+      cookieTitle:   'We use cookies',
+      cookieText:    'We use cookies to improve your experience, analyze traffic and personalize content. By continuing, you agree to our <a href="#" onclick="return false">Privacy Policy</a>.',
+      cookieAccept:  'Accept all',
+      cookieDecline: 'Decline'
+    },
+    es: {
+      cookieTitle:   'Usamos cookies',
+      cookieText:    'Usamos cookies para mejorar su experiencia, analizar el tráfico y personalizar el contenido. Al continuar, acepta nuestra <a href="#" onclick="return false">Política de Privacidad</a>.',
+      cookieAccept:  'Aceptar todo',
+      cookieDecline: 'Rechazar'
+    }
+  };
+
+  // Extend setLang to also translate cookie banner
+  const _origSetLang = window.setLang;
+  window.setLang = function(lang) {
+    _origSetLang(lang);
+    if (lang !== 'pt' && cookieT[lang]) {
+      Object.entries(cookieT[lang]).forEach(([k, v]) => {
+        document.querySelectorAll('[data-i18n="' + k + '"]').forEach(el => el.innerHTML = v);
+      });
+    }
+  };
+
+  function dismiss(accepted) {
+    localStorage.setItem(COOKIE_KEY, accepted ? 'accepted' : 'declined');
+    banner.classList.add('hide');
+    setTimeout(() => banner.style.display = 'none', 500);
+  }
+
+  // Show banner if no decision stored
+  if (!localStorage.getItem(COOKIE_KEY)) {
+    setTimeout(() => banner.classList.add('show'), 800);
+  } else {
+    banner.style.display = 'none';
+  }
+
+  btnOk.addEventListener('click', () => dismiss(true));
+  btnNo.addEventListener('click', () => dismiss(false));
+})();
 </script>
 </body>
 </html>
