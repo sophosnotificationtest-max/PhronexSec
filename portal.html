@@ -4,411 +4,138 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PhronexSec | Portal do Cliente</title>
-<meta name="description" content="Portal de clientes PhronexSec — Suporte e gestão de chamados.">
+<meta http-equiv="refresh" content="3;url=https://phronexsec-suporte.onrender.com/auth/login">
 <link rel="icon" type="image/png" href="phronexsec-logo.png">
-<link rel="shortcut icon" href="phronexsec-logo.png">
-<link rel="apple-touch-icon" href="phronexsec-logo.png">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root { --blue:#0076f5; --dark:#02060c; }
-*{ box-sizing:border-box; margin:0; padding:0; }
-html{ scroll-behavior:smooth; }
-body{
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
   background:var(--dark); color:#e2e8f0;
   font-family:'Plus Jakarta Sans',system-ui,sans-serif;
   -webkit-font-smoothing:antialiased;
-  font-feature-settings:'cv01','cv02';
   min-height:100vh; display:flex; flex-direction:column;
-}
-canvas#bg{ position:fixed; top:0; left:0; z-index:-1; pointer-events:none; }
-
-/* Header */
-.site-header{
-  position:sticky; top:0; z-index:100;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 32px; height:64px;
-  background:rgba(2,6,12,0.9); backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(30,41,59,0.7);
-}
-.header-brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
-.header-brand img{ height:34px; width:auto; filter:drop-shadow(0 0 8px rgba(0,118,245,.7)); }
-.brand-name{ font-size:0.85rem; font-weight:600; color:#e2e8f0; }
-.brand-sub{ font-size:0.62rem; font-family:'JetBrains Mono',monospace; color:#3b82f6; letter-spacing:0.1em; }
-.back-btn{
-  display:flex; align-items:center; gap:7px;
-  font-size:0.75rem; font-family:'JetBrains Mono',monospace;
-  color:#475569; text-decoration:none;
-  padding:6px 14px; border-radius:8px;
-  border:1px solid rgba(71,85,105,0.35); transition:.2s;
-}
-.back-btn:hover{ color:#94a3b8; border-color:rgba(71,85,105,0.6); }
-
-/* Main */
-main{
-  flex:1; display:flex; flex-direction:column;
   align-items:center; justify-content:center;
-  padding:60px 24px 80px; gap:16px;
 }
+canvas#bg { position:fixed; top:0; left:0; z-index:-1; pointer-events:none; }
 
-/* Portal card */
-.portal-card{
-  width:100%; max-width:500px;
+.card {
+  width:100%; max-width:420px;
   background:linear-gradient(145deg,#0a1223,#060e1c);
   border:1px solid rgba(0,118,245,0.28);
-  border-radius:24px; padding:52px 44px 48px;
+  border-radius:24px; padding:52px 40px 44px;
   text-align:center;
-  box-shadow:0 40px 80px -20px rgba(0,0,0,0.7),0 0 80px rgba(0,118,245,0.05),inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow:0 40px 80px -20px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.04);
+  margin: 24px;
 }
-
-/* Icon */
-.card-icon{
-  width:80px; height:80px; border-radius:22px;
+.card-icon {
+  width:76px; height:76px; border-radius:20px;
   background:linear-gradient(135deg,rgba(0,118,245,0.18),rgba(96,165,250,0.07));
   border:1px solid rgba(0,118,245,0.3);
   display:flex; align-items:center; justify-content:center;
-  margin:0 auto 24px;
+  margin:0 auto 22px;
   box-shadow:0 0 40px rgba(0,118,245,0.2);
 }
+h1 { font-size:1.4rem; font-weight:700; letter-spacing:-0.025em; margin-bottom:8px; }
+p  { font-size:0.85rem; color:#475569; font-weight:300; line-height:1.7; margin-bottom:32px; }
 
-/* Status badge */
-.status-badge{
-  display:inline-flex; align-items:center; gap:7px;
-  font-size:0.7rem; font-family:'JetBrains Mono',monospace;
-  letter-spacing:0.06em; padding:5px 14px; border-radius:100px;
-  margin-bottom:20px;
+/* Progress bar */
+.progress-wrap {
+  width:100%; height:3px;
+  background:rgba(30,41,59,0.8);
+  border-radius:100px; overflow:hidden;
+  margin-bottom:28px;
 }
-.status-badge.configured{ background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); color:#34d399; }
-.status-badge.pending{ background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); color:#fbbf24; }
-.status-dot{ width:7px; height:7px; border-radius:50%; animation:pulse-dot 2s ease infinite; }
-.configured .status-dot{ background:#10b981; box-shadow:0 0 6px #10b981; }
-.pending    .status-dot{ background:#f59e0b; }
-@keyframes pulse-dot{ 0%,100%{opacity:1} 50%{opacity:.4} }
+.progress-bar {
+  height:100%; width:0%;
+  background:linear-gradient(90deg,#0076f5,#60a5fa);
+  border-radius:100px;
+  animation:fill 3s linear forwards;
+}
+@keyframes fill { to { width:100%; } }
 
-/* Titles */
-.card-title{ font-size:1.5rem; font-weight:700; letter-spacing:-0.025em; margin-bottom:10px; line-height:1.2; }
-.card-desc{ font-size:0.85rem; color:#64748b; font-weight:300; line-height:1.7; margin-bottom:36px; }
-
-/* Open button */
-.open-btn{
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  width:100%; padding:15px 24px;
+.redirect-btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  width:100%; padding:14px;
   background:var(--blue); color:#fff;
-  font-weight:600; font-size:0.95rem;
-  border:none; border-radius:12px; cursor:pointer;
+  font-weight:600; font-size:0.9rem;
+  border:none; border-radius:12px;
   text-decoration:none; transition:.25s; font-family:inherit;
-  box-shadow:0 8px 30px rgba(0,118,245,0.3);
+  box-shadow:0 8px 28px rgba(0,118,245,0.35);
+  cursor:pointer;
 }
-.open-btn:hover{ background:#1a8aff; box-shadow:0 12px 40px rgba(0,118,245,0.5); transform:translateY(-2px); }
-.open-btn.disabled{ opacity:.4; cursor:not-allowed; pointer-events:none; transform:none; box-shadow:none; }
-
-/* URL config */
-.url-config-wrap{
-  margin-top:20px;
-  background:rgba(10,18,35,0.6);
-  border:1px solid rgba(30,41,59,0.8);
-  border-radius:12px; padding:16px 18px; text-align:left;
+.redirect-btn:hover {
+  background:#1a8aff;
+  box-shadow:0 12px 36px rgba(0,118,245,0.5);
+  transform:translateY(-1px);
 }
-.url-config-label{ font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#475569; letter-spacing:0.06em; margin-bottom:8px; display:block; }
-.url-input-row{ display:flex; gap:8px; }
-.url-input{
-  flex:1; background:rgba(2,6,12,0.8); border:1px solid #1e293b;
-  border-radius:8px; padding:9px 12px; color:#e2e8f0;
-  font-size:0.78rem; font-family:'JetBrains Mono',monospace;
-  outline:none; transition:border-color .2s;
+.back-link {
+  display:block; margin-top:16px;
+  font-size:0.75rem; font-family:'JetBrains Mono',monospace;
+  color:#334155; text-decoration:none; transition:color .2s;
 }
-.url-input:focus{ border-color:#3b82f6; }
-.url-input::placeholder{ color:#334155; }
-.url-save-btn{
-  background:rgba(0,118,245,0.15); border:1px solid rgba(0,118,245,0.3);
-  color:#60a5fa; border-radius:8px; padding:9px 14px;
-  font-size:0.75rem; font-weight:600; cursor:pointer;
-  transition:.2s; white-space:nowrap; font-family:inherit;
-}
-.url-save-btn:hover{ background:rgba(0,118,245,0.25); }
-
-/* Divider */
-.divider{
-  display:flex; align-items:center; gap:14px;
-  margin:28px 0 24px; color:#1e293b; font-size:0.7rem;
-  font-family:'JetBrains Mono',monospace;
-}
-.divider::before,.divider::after{ content:''; flex:1; height:1px; background:#1e293b; }
-
-/* Info grid */
-.info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; text-align:left; }
-.info-card{
-  background:rgba(10,18,35,0.5); border:1px solid rgba(30,41,59,0.6);
-  border-radius:10px; padding:14px 16px; transition:border-color .2s;
-}
-.info-card:hover{ border-color:rgba(0,118,245,0.25); }
-.info-card-icon{ font-size:14px; color:#3b82f6; margin-bottom:8px; }
-.info-card-title{ font-size:0.78rem; font-weight:600; color:#94a3b8; margin-bottom:3px; }
-.info-card-desc{ font-size:0.7rem; color:#475569; font-weight:300; line-height:1.5; }
-
-/* Setup guide */
-.setup-guide{ width:100%; max-width:500px; }
-.guide-toggle{
-  width:100%; display:flex; align-items:center; justify-content:space-between;
-  background:rgba(10,18,35,0.5); border:1px solid rgba(30,41,59,0.6);
-  border-radius:12px; padding:14px 18px; cursor:pointer;
-  color:#64748b; font-size:0.78rem; font-family:'JetBrains Mono',monospace;
-  transition:.2s; text-align:left;
-}
-.guide-toggle:hover{ color:#94a3b8; border-color:rgba(0,118,245,0.2); }
-.guide-toggle .arrow{ transition:transform .25s; }
-.guide-toggle.open .arrow{ transform:rotate(180deg); }
-.guide-body{
-  display:none; background:rgba(10,18,35,0.4);
-  border:1px solid rgba(30,41,59,0.6); border-top:none;
-  border-radius:0 0 12px 12px; padding:20px 20px 24px;
-}
-.guide-body.open{ display:block; }
-.step{ display:flex; gap:14px; margin-bottom:18px; }
-.step:last-child{ margin-bottom:0; }
-.step-num{
-  width:26px; height:26px; flex-shrink:0; border-radius:50%;
-  background:rgba(0,118,245,0.15); border:1px solid rgba(0,118,245,0.3);
-  display:flex; align-items:center; justify-content:center;
-  font-size:0.65rem; font-family:'JetBrains Mono',monospace; color:#60a5fa; font-weight:600;
-}
-.step-title{ font-size:0.8rem; font-weight:600; color:#cbd5e1; margin-bottom:3px; }
-.step-desc{ font-size:0.73rem; color:#475569; font-weight:300; line-height:1.55; }
-.step-code{
-  display:inline-block; margin-top:6px;
-  background:rgba(0,0,0,0.4); border:1px solid rgba(30,41,59,0.8);
-  border-radius:6px; padding:5px 10px;
-  font-family:'JetBrains Mono',monospace; font-size:0.68rem;
-  color:#7dd3fc; line-height:1.6; white-space:pre;
-}
-.step-link{ color:#60a5fa; font-size:0.72rem; text-decoration:none; font-family:'JetBrains Mono',monospace; }
-.step-link:hover{ text-decoration:underline; }
-
-footer{
-  text-align:center; padding:20px; font-size:0.68rem; color:#1e293b;
-  border-top:1px solid rgba(30,41,59,0.3); font-family:'JetBrains Mono',monospace;
-}
-
-@media(max-width:520px){
-  .portal-card{ padding:36px 24px; }
-  .info-grid{ grid-template-columns:1fr; }
-  .site-header{ padding:0 20px; }
+.back-link:hover { color:#64748b; }
+.counter {
+  font-size:0.72rem; font-family:'JetBrains Mono',monospace;
+  color:#334155; margin-bottom:16px;
 }
 </style>
 </head>
 <body>
 <canvas id="bg"></canvas>
 
-<header class="site-header">
-  <a href="index.html" class="header-brand">
-    <img src="phronexsec-logo.png" alt="PhronexSec">
-    <div>
-      <div class="brand-name">PhronexSec</div>
-      <div class="brand-sub">PORTAL DO CLIENTE</div>
-    </div>
-  </a>
-  <a href="index.html" class="back-btn">
-    <i class="fa-solid fa-arrow-left" style="font-size:10px"></i> Voltar ao site
-  </a>
-</header>
-
-<main>
-  <div class="portal-card">
-    <div class="card-icon">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
-        <defs><linearGradient id="pig" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#0076f5"/></linearGradient></defs>
-        <rect x="2" y="5" width="20" height="14" rx="3" fill="url(#pig)" fill-opacity="0.12" stroke="url(#pig)" stroke-width="1.5"/>
-        <circle cx="8" cy="12" r="2.5" fill="url(#pig)" fill-opacity="0.2" stroke="url(#pig)" stroke-width="1.3"/>
-        <line x1="13" y1="10" x2="20" y2="10" stroke="url(#pig)" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="13" y1="14" x2="17" y2="14" stroke="url(#pig)" stroke-width="1.3" stroke-linecap="round"/>
-      </svg>
-    </div>
-
-    <div class="status-badge pending" id="status-badge">
-      <div class="status-dot"></div>
-      <span id="status-text">Aguardando configuração</span>
-    </div>
-
-    <h1 class="card-title">Central de Suporte</h1>
-    <p class="card-desc">Acesse o portal de chamados da PhronexSec.<br>Abra, acompanhe e gerencie suas solicitações de suporte.</p>
-
-    <a id="open-portal-btn" href="#" target="_blank" rel="noopener" class="open-btn disabled" onclick="openPortal(event)">
-      <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:14px"></i>
-      Acessar Portal de Chamados
-    </a>
-
-    <div class="url-config-wrap">
-      <span class="url-config-label">&#9881; URL DO PEPPERMINT (Render)</span>
-      <div class="url-input-row">
-        <input type="url" id="peppermint-url" class="url-input" placeholder="https://seu-app.onrender.com" autocomplete="off" oninput="onUrlInput()">
-        <button class="url-save-btn" onclick="saveUrl()">Salvar</button>
-      </div>
-    </div>
-
-    <div class="divider">o que você terá acesso</div>
-
-    <div class="info-grid">
-      <div class="info-card">
-        <div class="info-card-icon"><i class="fa-solid fa-ticket"></i></div>
-        <div class="info-card-title">Chamados</div>
-        <div class="info-card-desc">Abra e acompanhe tickets de suporte em tempo real</div>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon"><i class="fa-solid fa-comments"></i></div>
-        <div class="info-card-title">Histórico</div>
-        <div class="info-card-desc">Veja todo o histórico de atendimentos e resoluções</div>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon"><i class="fa-solid fa-bell"></i></div>
-        <div class="info-card-title">Notificações</div>
-        <div class="info-card-desc">Receba alertas sobre atualização dos chamados</div>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon"><i class="fa-solid fa-user-shield"></i></div>
-        <div class="info-card-title">Seguro</div>
-        <div class="info-card-desc">Acesso autenticado com suas credenciais pessoais</div>
-      </div>
-    </div>
+<div class="card">
+  <div class="card-icon">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#0076f5"/></linearGradient></defs>
+      <rect x="2" y="5" width="20" height="14" rx="3" fill="url(#g)" fill-opacity="0.12" stroke="url(#g)" stroke-width="1.5"/>
+      <circle cx="8" cy="12" r="2.5" fill="url(#g)" fill-opacity="0.2" stroke="url(#g)" stroke-width="1.3"/>
+      <line x1="13" y1="10" x2="20" y2="10" stroke="url(#g)" stroke-width="1.3" stroke-linecap="round"/>
+      <line x1="13" y1="14" x2="17" y2="14" stroke="url(#g)" stroke-width="1.3" stroke-linecap="round"/>
+    </svg>
   </div>
 
-  <div class="setup-guide">
-    <button class="guide-toggle" id="guide-toggle" onclick="toggleGuide()">
-      <span>&#128203; Como configurar o Peppermint no Render</span>
-      <i class="fa-solid fa-chevron-down arrow" style="font-size:11px"></i>
-    </button>
-    <div class="guide-body" id="guide-body">
+  <h1>Portal do Cliente</h1>
+  <p>Redirecionando para a central de suporte PhronexSec…</p>
 
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title">Criar conta no Render</div>
-          <div class="step-desc">Acesse <a href="https://render.com" target="_blank" class="step-link">render.com</a> e crie uma conta gratuita. Pode usar login com GitHub.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title">Criar banco PostgreSQL</div>
-          <div class="step-desc">No dashboard do Render, clique em <strong style="color:#94a3b8">New → PostgreSQL</strong>. Selecione o plano gratuito e anote a <strong style="color:#94a3b8">Internal Database URL</strong>.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title">Deploy do Peppermint via Docker</div>
-          <div class="step-desc">Clique em <strong style="color:#94a3b8">New → Web Service → Deploy an existing image</strong> e use:</div>
-          <div class="step-code">pepperlabs/peppermint:latest</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <div class="step-title">Variáveis de ambiente</div>
-          <div class="step-desc">Em <strong style="color:#94a3b8">Environment</strong>, adicione:</div>
-          <div class="step-code">DATABASE_URL  = (cole a URL do PostgreSQL)
-SECRET        = qualquer-string-longa-aleatoria
-PORT          = 3000</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num">5</div>
-        <div class="step-content">
-          <div class="step-title">Configurar porta e fazer deploy</div>
-          <div class="step-desc">Em <strong style="color:#94a3b8">Settings</strong> defina a porta <code style="color:#7dd3fc;font-family:monospace;font-size:0.72rem">3000</code>. Clique em <strong style="color:#94a3b8">Deploy</strong> e aguarde ~3 min. O Render gera uma URL pública automática.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num">6</div>
-        <div class="step-content">
-          <div class="step-title">Colar a URL nesta página</div>
-          <div class="step-desc">Copie a URL gerada (ex: <code style="color:#7dd3fc;font-family:monospace;font-size:0.72rem">https://phronexsec-suporte.onrender.com</code>), cole no campo acima e clique <strong style="color:#94a3b8">Salvar</strong>. O botão será ativado automaticamente.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num">7</div>
-        <div class="step-content">
-          <div class="step-title">Criar usuários para os clientes</div>
-          <div class="step-desc">No Peppermint, acesse <strong style="color:#94a3b8">Admin → Users → Create</strong> e crie um login para cada cliente. Login padrão inicial: <code style="color:#7dd3fc;font-family:monospace;font-size:0.72rem">admin@admin.com / 1234</code></div>
-        </div>
-      </div>
-
-      <div style="margin-top:16px;padding-top:16px;border-top:1px solid #1e293b;font-size:0.7rem;color:#334155;font-family:'JetBrains Mono',monospace;line-height:1.7">
-        &#8505; Plano gratuito do Render tem <strong style="color:#475569">cold start</strong> (~30s na 1ª abertura após inatividade). Para manter ativo, use <a href="https://uptimerobot.com" target="_blank" class="step-link">UptimeRobot</a> (gratuito) pingando a URL a cada 5 min, ou considere o plano Starter ($7/mês).
-      </div>
-
-    </div>
+  <div class="progress-wrap">
+    <div class="progress-bar"></div>
   </div>
-</main>
 
-<footer>© 2026 PhronexSec Cybersecurity · Defesa de Infraestruturas Críticas</footer>
+  <p class="counter" id="counter">Aguarde <span id="secs">3</span>s…</p>
+
+  <a href="https://phronexsec-suporte.onrender.com/auth/login" target="_blank" class="redirect-btn" id="redirect-btn">
+    <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:13px"></i>
+    Acessar agora
+  </a>
+
+  <a href="index.html" class="back-link">← Voltar ao site</a>
+</div>
 
 <script>
-const STORAGE_KEY = 'phronexsec_peppermint_url';
-// Cole aqui a URL após o deploy para não precisar configurar manualmente:
-const URL_HARDCODED = ''; // ex: 'https://phronexsec-suporte.onrender.com'
-
-function getUrl(){ return localStorage.getItem(STORAGE_KEY) || URL_HARDCODED || ''; }
-
-function setButtonState(url){
-  const btn   = document.getElementById('open-portal-btn');
-  const badge = document.getElementById('status-badge');
-  const btxt  = document.getElementById('status-text');
-  if(url){
-    btn.href = url;
-    btn.classList.remove('disabled');
-    badge.className = 'status-badge configured';
-    btxt.textContent = 'Portal configurado';
-  } else {
-    btn.href = '#';
-    btn.classList.add('disabled');
-    badge.className = 'status-badge pending';
-    btxt.textContent = 'Aguardando configuração';
+// Countdown
+let s = 3;
+const el = document.getElementById('secs');
+const interval = setInterval(() => {
+  s--;
+  el.textContent = s;
+  if (s <= 0) {
+    clearInterval(interval);
+    document.getElementById('counter').textContent = 'Redirecionando…';
+    window.location.href = 'https://phronexsec-suporte.onrender.com/auth/login';
   }
-}
+}, 1000);
 
-function onUrlInput(){
-  setButtonState(document.getElementById('peppermint-url').value.trim());
-}
-
-function saveUrl(){
-  const val = document.getElementById('peppermint-url').value.trim();
-  if(!val) return;
-  localStorage.setItem(STORAGE_KEY, val);
-  setButtonState(val);
-  const btn = document.querySelector('.url-save-btn');
-  btn.textContent = '✔ Salvo!'; btn.style.color = '#34d399';
-  setTimeout(()=>{ btn.textContent='Salvar'; btn.style.color=''; }, 2000);
-}
-
-function openPortal(e){ if(!getUrl()) e.preventDefault(); }
-
-function toggleGuide(){
-  document.getElementById('guide-body').classList.toggle('open');
-  document.getElementById('guide-toggle').classList.toggle('open');
-}
-
-(function init(){
-  const saved = getUrl();
-  if(saved){ document.getElementById('peppermint-url').value = saved; setButtonState(saved); }
-})();
-
-document.getElementById('peppermint-url').addEventListener('keydown', e=>{ if(e.key==='Enter') saveUrl(); });
-
-/* Particles */
+// Particles
 (function(){
-  const c=document.getElementById('bg'), ctx=c.getContext('2d');
+  const c=document.getElementById('bg'),ctx=c.getContext('2d');
   let W,H;
-  const pts=Array.from({length:70},()=>({
+  const pts=Array.from({length:60},()=>({
     x:Math.random()*9999,y:Math.random()*9999,
-    vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,
-    r:Math.random()*1.3+.3,a:Math.random()*.35+.08
+    vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,
+    r:Math.random()*1.2+.3,a:Math.random()*.3+.07
   }));
   function resize(){ W=c.width=innerWidth; H=c.height=innerHeight; }
   resize(); window.addEventListener('resize',resize);
