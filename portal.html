@@ -4,746 +4,425 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PhronexSec | Portal do Cliente</title>
-<meta name="description" content="Portal de clientes PhronexSec — Gestão de chamados integrado ao GLPI.">
+<meta name="description" content="Portal de clientes PhronexSec — Suporte e gestão de chamados.">
 <link rel="icon" type="image/png" href="phronexsec-logo.png">
 <link rel="shortcut icon" href="phronexsec-logo.png">
 <link rel="apple-touch-icon" href="phronexsec-logo.png">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --blue: #0076f5;
-  --blue-dim: rgba(0,118,245,0.15);
-  --blue-border: rgba(0,118,245,0.35);
-  --dark: #02060c;
+:root { --blue:#0076f5; --dark:#02060c; }
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--dark); color:#e2e8f0;
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:'cv01','cv02';
+  min-height:100vh; display:flex; flex-direction:column;
+}
+canvas#bg{ position:fixed; top:0; left:0; z-index:-1; pointer-events:none; }
+
+/* Header */
+.site-header{
+  position:sticky; top:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 32px; height:64px;
+  background:rgba(2,6,12,0.9); backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(30,41,59,0.7);
+}
+.header-brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+.header-brand img{ height:34px; width:auto; filter:drop-shadow(0 0 8px rgba(0,118,245,.7)); }
+.brand-name{ font-size:0.85rem; font-weight:600; color:#e2e8f0; }
+.brand-sub{ font-size:0.62rem; font-family:'JetBrains Mono',monospace; color:#3b82f6; letter-spacing:0.1em; }
+.back-btn{
+  display:flex; align-items:center; gap:7px;
+  font-size:0.75rem; font-family:'JetBrains Mono',monospace;
+  color:#475569; text-decoration:none;
+  padding:6px 14px; border-radius:8px;
+  border:1px solid rgba(71,85,105,0.35); transition:.2s;
+}
+.back-btn:hover{ color:#94a3b8; border-color:rgba(71,85,105,0.6); }
+
+/* Main */
+main{
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:60px 24px 80px; gap:16px;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--dark);
-  color: #e2e8f0;
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  font-feature-settings: 'cv01','cv02';
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* Portal card */
+.portal-card{
+  width:100%; max-width:500px;
+  background:linear-gradient(145deg,#0a1223,#060e1c);
+  border:1px solid rgba(0,118,245,0.28);
+  border-radius:24px; padding:52px 44px 48px;
+  text-align:center;
+  box-shadow:0 40px 80px -20px rgba(0,0,0,0.7),0 0 80px rgba(0,118,245,0.05),inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
-canvas#bg {
-  position: fixed;
-  top:0; left:0;
-  z-index: -1;
-  pointer-events: none;
+/* Icon */
+.card-icon{
+  width:80px; height:80px; border-radius:22px;
+  background:linear-gradient(135deg,rgba(0,118,245,0.18),rgba(96,165,250,0.07));
+  border:1px solid rgba(0,118,245,0.3);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 24px;
+  box-shadow:0 0 40px rgba(0,118,245,0.2);
 }
 
-/* ── Header ── */
-.portal-header {
-  position: sticky; top: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 32px;
-  height: 64px;
-  background: rgba(2,6,12,0.85);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(30,41,59,0.6);
+/* Status badge */
+.status-badge{
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:0.7rem; font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.06em; padding:5px 14px; border-radius:100px;
+  margin-bottom:20px;
 }
-.header-logo {
-  display: flex; align-items: center; gap: 12px;
-  text-decoration: none;
-}
-.header-logo img {
-  height: 36px; width: auto;
-  filter: drop-shadow(0 0 8px rgba(0,118,245,.7));
-}
-.header-logo-name {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #e2e8f0;
-  letter-spacing: 0.02em;
-}
-.header-logo-sub {
-  font-size: 0.65rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: #60a5fa;
-  letter-spacing: 0.08em;
-}
-.back-link {
-  font-size: 0.75rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: #475569;
-  text-decoration: none;
-  display: flex; align-items: center; gap: 6px;
-  transition: color .2s;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-}
-.back-link:hover { color: #94a3b8; border-color: rgba(71,85,105,0.4); }
+.status-badge.configured{ background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); color:#34d399; }
+.status-badge.pending{ background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); color:#fbbf24; }
+.status-dot{ width:7px; height:7px; border-radius:50%; animation:pulse-dot 2s ease infinite; }
+.configured .status-dot{ background:#10b981; box-shadow:0 0 6px #10b981; }
+.pending    .status-dot{ background:#f59e0b; }
+@keyframes pulse-dot{ 0%,100%{opacity:1} 50%{opacity:.4} }
 
-/* ── Main ── */
-.portal-main {
-  flex: 1;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 48px 24px 80px;
-}
-.portal-wrap {
-  width: 100%;
-  max-width: 780px;
-}
-.portal-heading {
-  text-align: center;
-  margin-bottom: 40px;
-}
-.portal-heading h1 {
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  margin-bottom: 8px;
-}
-.portal-heading p {
-  font-size: 0.85rem;
-  color: #475569;
-  font-weight: 300;
-}
+/* Titles */
+.card-title{ font-size:1.5rem; font-weight:700; letter-spacing:-0.025em; margin-bottom:10px; line-height:1.2; }
+.card-desc{ font-size:0.85rem; color:#64748b; font-weight:300; line-height:1.7; margin-bottom:36px; }
 
-/* ── Login card ── */
-.portal-login-card {
-  background: linear-gradient(145deg, #0a1223, #060e1c);
-  border: 1px solid rgba(0,118,245,0.3);
-  border-radius: 20px;
-  padding: 52px 44px;
-  text-align: center;
-  max-width: 420px;
-  margin: 0 auto;
-  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.7), 0 0 60px rgba(0,118,245,0.06), inset 0 1px 0 rgba(255,255,255,0.04);
+/* Open button */
+.open-btn{
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  width:100%; padding:15px 24px;
+  background:var(--blue); color:#fff;
+  font-weight:600; font-size:0.95rem;
+  border:none; border-radius:12px; cursor:pointer;
+  text-decoration:none; transition:.25s; font-family:inherit;
+  box-shadow:0 8px 30px rgba(0,118,245,0.3);
 }
-.login-icon {
-  width: 76px; height: 76px;
-  border-radius: 20px;
-  background: linear-gradient(135deg,rgba(0,118,245,0.18),rgba(96,165,250,0.08));
-  border: 1px solid rgba(0,118,245,0.3);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 22px;
-  box-shadow: 0 0 30px rgba(0,118,245,0.18);
-}
-.login-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 6px; }
-.login-sub { font-size: 0.78rem; color: #475569; font-weight: 300; margin-bottom: 28px; }
+.open-btn:hover{ background:#1a8aff; box-shadow:0 12px 40px rgba(0,118,245,0.5); transform:translateY(-2px); }
+.open-btn.disabled{ opacity:.4; cursor:not-allowed; pointer-events:none; transform:none; box-shadow:none; }
 
-/* ── Inputs ── */
-.portal-input {
-  width: 100%;
-  background: rgba(15,23,42,0.85);
-  border: 1px solid #1e293b;
-  border-radius: 10px;
-  padding: 13px 16px;
-  color: #e2e8f0;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color .25s, box-shadow .25s;
-  margin-bottom: 12px;
-  font-family: inherit;
+/* URL config */
+.url-config-wrap{
+  margin-top:20px;
+  background:rgba(10,18,35,0.6);
+  border:1px solid rgba(30,41,59,0.8);
+  border-radius:12px; padding:16px 18px; text-align:left;
 }
-.portal-input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+.url-config-label{ font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#475569; letter-spacing:0.06em; margin-bottom:8px; display:block; }
+.url-input-row{ display:flex; gap:8px; }
+.url-input{
+  flex:1; background:rgba(2,6,12,0.8); border:1px solid #1e293b;
+  border-radius:8px; padding:9px 12px; color:#e2e8f0;
+  font-size:0.78rem; font-family:'JetBrains Mono',monospace;
+  outline:none; transition:border-color .2s;
 }
-.portal-input::placeholder { color: #334155; }
+.url-input:focus{ border-color:#3b82f6; }
+.url-input::placeholder{ color:#334155; }
+.url-save-btn{
+  background:rgba(0,118,245,0.15); border:1px solid rgba(0,118,245,0.3);
+  color:#60a5fa; border-radius:8px; padding:9px 14px;
+  font-size:0.75rem; font-weight:600; cursor:pointer;
+  transition:.2s; white-space:nowrap; font-family:inherit;
+}
+.url-save-btn:hover{ background:rgba(0,118,245,0.25); }
 
-/* ── Buttons ── */
-.portal-btn {
-  width: 100%;
-  padding: 13px;
-  border-radius: 10px;
-  background: var(--blue);
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.9rem;
-  border: none;
-  cursor: pointer;
-  transition: .25s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  font-family: inherit;
+/* Divider */
+.divider{
+  display:flex; align-items:center; gap:14px;
+  margin:28px 0 24px; color:#1e293b; font-size:0.7rem;
+  font-family:'JetBrains Mono',monospace;
 }
-.portal-btn:hover:not(:disabled) {
-  background: #2d8fff;
-  box-shadow: 0 8px 28px rgba(0,118,245,0.45);
-  transform: translateY(-1px);
-}
-.portal-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.divider::before,.divider::after{ content:''; flex:1; height:1px; background:#1e293b; }
 
-/* ── Error / Success ── */
-.portal-error {
-  color: #f87171;
-  font-size: 0.76rem;
-  margin-top: 6px;
-  margin-bottom: 4px;
-  display: none;
-  font-family: 'JetBrains Mono', monospace;
-  text-align: left;
+/* Info grid */
+.info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; text-align:left; }
+.info-card{
+  background:rgba(10,18,35,0.5); border:1px solid rgba(30,41,59,0.6);
+  border-radius:10px; padding:14px 16px; transition:border-color .2s;
 }
-.portal-error.show { display: block; }
-.portal-success-msg {
-  display: none;
-  color: #34d399;
-  font-size: 0.8rem;
-  font-family: 'JetBrains Mono', monospace;
-  text-align: center;
-  margin-top: 4px;
+.info-card:hover{ border-color:rgba(0,118,245,0.25); }
+.info-card-icon{ font-size:14px; color:#3b82f6; margin-bottom:8px; }
+.info-card-title{ font-size:0.78rem; font-weight:600; color:#94a3b8; margin-bottom:3px; }
+.info-card-desc{ font-size:0.7rem; color:#475569; font-weight:300; line-height:1.5; }
+
+/* Setup guide */
+.setup-guide{ width:100%; max-width:500px; }
+.guide-toggle{
+  width:100%; display:flex; align-items:center; justify-content:space-between;
+  background:rgba(10,18,35,0.5); border:1px solid rgba(30,41,59,0.6);
+  border-radius:12px; padding:14px 18px; cursor:pointer;
+  color:#64748b; font-size:0.78rem; font-family:'JetBrains Mono',monospace;
+  transition:.2s; text-align:left;
+}
+.guide-toggle:hover{ color:#94a3b8; border-color:rgba(0,118,245,0.2); }
+.guide-toggle .arrow{ transition:transform .25s; }
+.guide-toggle.open .arrow{ transform:rotate(180deg); }
+.guide-body{
+  display:none; background:rgba(10,18,35,0.4);
+  border:1px solid rgba(30,41,59,0.6); border-top:none;
+  border-radius:0 0 12px 12px; padding:20px 20px 24px;
+}
+.guide-body.open{ display:block; }
+.step{ display:flex; gap:14px; margin-bottom:18px; }
+.step:last-child{ margin-bottom:0; }
+.step-num{
+  width:26px; height:26px; flex-shrink:0; border-radius:50%;
+  background:rgba(0,118,245,0.15); border:1px solid rgba(0,118,245,0.3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.65rem; font-family:'JetBrains Mono',monospace; color:#60a5fa; font-weight:600;
+}
+.step-title{ font-size:0.8rem; font-weight:600; color:#cbd5e1; margin-bottom:3px; }
+.step-desc{ font-size:0.73rem; color:#475569; font-weight:300; line-height:1.55; }
+.step-code{
+  display:inline-block; margin-top:6px;
+  background:rgba(0,0,0,0.4); border:1px solid rgba(30,41,59,0.8);
+  border-radius:6px; padding:5px 10px;
+  font-family:'JetBrains Mono',monospace; font-size:0.68rem;
+  color:#7dd3fc; line-height:1.6; white-space:pre;
+}
+.step-link{ color:#60a5fa; font-size:0.72rem; text-decoration:none; font-family:'JetBrains Mono',monospace; }
+.step-link:hover{ text-decoration:underline; }
+
+footer{
+  text-align:center; padding:20px; font-size:0.68rem; color:#1e293b;
+  border-top:1px solid rgba(30,41,59,0.3); font-family:'JetBrains Mono',monospace;
 }
 
-/* ── Dashboard ── */
-.portal-dashboard { display: none; }
-.portal-dashboard.show { display: block; }
-.portal-login-panel.hide { display: none; }
-
-.dash-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
-}
-.user-badge {
-  display: flex; align-items: center; gap: 10px;
-  background: rgba(0,118,245,0.08);
-  border: 1px solid rgba(0,118,245,0.2);
-  border-radius: 10px;
-  padding: 8px 16px;
-  font-size: 0.8rem;
-  color: #94a3b8;
-}
-.user-badge strong { color: #60a5fa; font-weight: 600; }
-.btn-logout {
-  background: transparent;
-  border: 1px solid rgba(100,116,139,0.3);
-  color: #64748b;
-  border-radius: 8px;
-  padding: 7px 16px;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: .2s;
-  font-family: 'JetBrains Mono', monospace;
-  display: flex; align-items: center; gap: 6px;
-}
-.btn-logout:hover { color: #f87171; border-color: rgba(248,113,113,0.5); }
-
-/* ── Tabs ── */
-.portal-tabs {
-  display: flex; gap: 4px;
-  background: rgba(10,18,35,0.7);
-  border: 1px solid rgba(30,58,138,0.3);
-  border-radius: 12px;
-  padding: 4px;
-  margin-bottom: 24px;
-}
-.portal-tab {
-  flex: 1; padding: 10px 16px;
-  border-radius: 9px;
-  background: transparent;
-  border: none;
-  color: #64748b;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: .2s;
-  display: flex; align-items: center; justify-content: center; gap: 7px;
-  font-family: inherit;
-}
-.portal-tab:hover { color: #94a3b8; }
-.portal-tab.active {
-  background: rgba(0,118,245,0.15);
-  color: #60a5fa;
-  border: 1px solid rgba(0,118,245,0.25);
-}
-
-/* ── Panels ── */
-.portal-panel { display: none; }
-.portal-panel.active { display: block; }
-
-/* ── Ticket cards ── */
-.ticket-card {
-  background: rgba(10,18,35,0.7);
-  border: 1px solid rgba(30,58,138,0.25);
-  border-radius: 12px;
-  padding: 16px 20px;
-  margin-bottom: 10px;
-  display: flex; align-items: center; gap: 16px;
-  transition: border-color .2s, background .2s;
-}
-.ticket-card:hover { border-color: rgba(0,118,245,0.4); background: rgba(0,118,245,0.04); }
-.ticket-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.st-new      { background:#3b82f6; box-shadow:0 0 8px #3b82f6aa; }
-.st-progress { background:#f59e0b; box-shadow:0 0 8px #f59e0baa; }
-.st-solved   { background:#10b981; box-shadow:0 0 8px #10b981aa; }
-.st-closed   { background:#475569; }
-.st-waiting  { background:#8b5cf6; box-shadow:0 0 8px #8b5cf6aa; }
-.ticket-id { font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:#475569; flex-shrink:0; min-width:52px; }
-.ticket-name { flex:1; font-size:0.85rem; color:#cbd5e1; }
-.ticket-date { font-size:0.7rem; color:#475569; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
-.ticket-badge {
-  font-size:0.62rem; padding:3px 10px; border-radius:100px;
-  font-family:'JetBrains Mono',monospace; font-weight:500; flex-shrink:0;
-}
-.bg-new      { background:rgba(59,130,246,0.15);  color:#60a5fa; border:1px solid rgba(59,130,246,0.3); }
-.bg-progress { background:rgba(245,158,11,0.15);  color:#fbbf24; border:1px solid rgba(245,158,11,0.3); }
-.bg-solved   { background:rgba(16,185,129,0.15);  color:#34d399; border:1px solid rgba(16,185,129,0.3); }
-.bg-closed   { background:rgba(71,85,105,0.15);   color:#94a3b8;  border:1px solid rgba(71,85,105,0.3); }
-.bg-waiting  { background:rgba(139,92,246,0.15);  color:#a78bfa; border:1px solid rgba(139,92,246,0.3); }
-
-/* ── New ticket form ── */
-.form-grid { display: grid; gap: 12px; }
-.portal-select {
-  width: 100%;
-  background: rgba(15,23,42,0.85);
-  border: 1px solid #1e293b;
-  border-radius: 10px;
-  padding: 13px 16px;
-  color: #e2e8f0;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color .25s;
-  font-family: inherit;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-}
-.portal-select:focus { border-color: #3b82f6; }
-.portal-select option { background: #0a1223; }
-.portal-textarea {
-  width: 100%;
-  background: rgba(15,23,42,0.85);
-  border: 1px solid #1e293b;
-  border-radius: 10px;
-  padding: 13px 16px;
-  color: #e2e8f0;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color .25s;
-  font-family: inherit;
-  resize: vertical;
-  min-height: 130px;
-}
-.portal-textarea:focus { border-color: #3b82f6; }
-.portal-textarea::placeholder { color: #334155; }
-
-/* ── Spinner ── */
-.spinner {
-  width: 18px; height: 18px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin .7s linear infinite;
-  display: none;
-}
-.spinner.show { display: block; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ── Empty state ── */
-.empty-state {
-  text-align: center;
-  padding: 56px 20px;
-  color: #334155;
-  font-size: 0.85rem;
-}
-.empty-state svg { margin: 0 auto 14px; display: block; opacity: 0.25; }
-
-/* ── Config notice ── */
-.config-notice {
-  background: rgba(245,158,11,0.07);
-  border: 1px solid rgba(245,158,11,0.25);
-  border-radius: 12px;
-  padding: 14px 18px;
-  font-size: 0.76rem;
-  color: #fbbf24;
-  margin-bottom: 28px;
-  font-family: 'JetBrains Mono', monospace;
-  display: flex; gap: 10px; align-items: flex-start;
-  line-height: 1.65;
-}
-
-/* ── Footer ── */
-.portal-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 0.7rem;
-  color: #1e293b;
-  border-top: 1px solid rgba(30,41,59,0.4);
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* ── Responsive ── */
-@media (max-width: 560px) {
-  .portal-login-card { padding: 36px 24px; }
-  .ticket-card { flex-wrap: wrap; gap: 10px; }
-  .ticket-date { display: none; }
+@media(max-width:520px){
+  .portal-card{ padding:36px 24px; }
+  .info-grid{ grid-template-columns:1fr; }
+  .site-header{ padding:0 20px; }
 }
 </style>
 </head>
-
 <body>
 <canvas id="bg"></canvas>
 
-<!-- Header -->
-<header class="portal-header">
-  <a href="index.html" class="header-logo">
+<header class="site-header">
+  <a href="index.html" class="header-brand">
     <img src="phronexsec-logo.png" alt="PhronexSec">
     <div>
-      <div class="header-logo-name">PhronexSec</div>
-      <div class="header-logo-sub">PORTAL DO CLIENTE</div>
+      <div class="brand-name">PhronexSec</div>
+      <div class="brand-sub">PORTAL DO CLIENTE</div>
     </div>
   </a>
-  <a href="index.html" class="back-link">
-    <i class="fa-solid fa-arrow-left" style="font-size:11px"></i> Voltar ao site
+  <a href="index.html" class="back-btn">
+    <i class="fa-solid fa-arrow-left" style="font-size:10px"></i> Voltar ao site
   </a>
 </header>
 
-<!-- Main -->
-<main class="portal-main">
-  <div class="portal-wrap">
-
-    <div class="portal-heading">
-      <h1>Portal do Cliente</h1>
-      <p>Acesse seus chamados, abra solicitações e acompanhe o atendimento em tempo real.</p>
+<main>
+  <div class="portal-card">
+    <div class="card-icon">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+        <defs><linearGradient id="pig" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#0076f5"/></linearGradient></defs>
+        <rect x="2" y="5" width="20" height="14" rx="3" fill="url(#pig)" fill-opacity="0.12" stroke="url(#pig)" stroke-width="1.5"/>
+        <circle cx="8" cy="12" r="2.5" fill="url(#pig)" fill-opacity="0.2" stroke="url(#pig)" stroke-width="1.3"/>
+        <line x1="13" y1="10" x2="20" y2="10" stroke="url(#pig)" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="13" y1="14" x2="17" y2="14" stroke="url(#pig)" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
     </div>
 
-    <!-- Config notice -->
-    <div class="config-notice" id="glpi-config-notice">
-      <span>⚙️</span>
-      <span>Para ativar o portal, configure a URL e App-Token do GLPI na variável <code style="color:#f59e0b">GLPI_CONFIG</code> no script. <a href="https://glpi-project.org/downloads/" target="_blank" style="color:#60a5fa;text-decoration:underline">Baixar GLPI →</a></span>
+    <div class="status-badge pending" id="status-badge">
+      <div class="status-dot"></div>
+      <span id="status-text">Aguardando configuração</span>
     </div>
 
-    <!-- LOGIN -->
-    <div id="portal-login-panel" class="portal-login-panel">
-      <div class="portal-login-card">
-        <div class="login-icon">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-            <defs><linearGradient id="plg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#0076f5"/></linearGradient></defs>
-            <circle cx="12" cy="8" r="4" stroke="url(#plg)" stroke-width="1.5" fill="url(#plg)" fill-opacity="0.15"/>
-            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="url(#plg)" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <p class="login-title">Acesso ao Portal</p>
-        <p class="login-sub">Use suas credenciais GLPI</p>
+    <h1 class="card-title">Central de Suporte</h1>
+    <p class="card-desc">Acesse o portal de chamados da PhronexSec.<br>Abra, acompanhe e gerencie suas solicitações de suporte.</p>
 
-        <input type="text" id="glpi-user" class="portal-input" placeholder="Usuário" autocomplete="username">
-        <input type="password" id="glpi-pass" class="portal-input" placeholder="Senha" autocomplete="current-password">
-        <p class="portal-error" id="portal-login-error"></p>
-        <button class="portal-btn" id="portal-login-btn" onclick="glpiLogin()">
-          <div class="spinner" id="login-spinner"></div>
-          <span id="login-btn-text">Entrar</span>
-        </button>
+    <a id="open-portal-btn" href="#" target="_blank" rel="noopener" class="open-btn disabled" onclick="openPortal(event)">
+      <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:14px"></i>
+      Acessar Portal de Chamados
+    </a>
+
+    <div class="url-config-wrap">
+      <span class="url-config-label">&#9881; URL DO PEPPERMINT (Render)</span>
+      <div class="url-input-row">
+        <input type="url" id="peppermint-url" class="url-input" placeholder="https://seu-app.onrender.com" autocomplete="off" oninput="onUrlInput()">
+        <button class="url-save-btn" onclick="saveUrl()">Salvar</button>
       </div>
     </div>
 
-    <!-- DASHBOARD -->
-    <div id="portal-dashboard" class="portal-dashboard">
+    <div class="divider">o que você terá acesso</div>
 
-      <div class="dash-header">
-        <div class="user-badge">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="8" r="4" stroke="#60a5fa" stroke-width="1.5"/>
-            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          Olá, <strong id="portal-username-display">—</strong>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-icon"><i class="fa-solid fa-ticket"></i></div>
+        <div class="info-card-title">Chamados</div>
+        <div class="info-card-desc">Abra e acompanhe tickets de suporte em tempo real</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon"><i class="fa-solid fa-comments"></i></div>
+        <div class="info-card-title">Histórico</div>
+        <div class="info-card-desc">Veja todo o histórico de atendimentos e resoluções</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon"><i class="fa-solid fa-bell"></i></div>
+        <div class="info-card-title">Notificações</div>
+        <div class="info-card-desc">Receba alertas sobre atualização dos chamados</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="info-card-title">Seguro</div>
+        <div class="info-card-desc">Acesso autenticado com suas credenciais pessoais</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="setup-guide">
+    <button class="guide-toggle" id="guide-toggle" onclick="toggleGuide()">
+      <span>&#128203; Como configurar o Peppermint no Render</span>
+      <i class="fa-solid fa-chevron-down arrow" style="font-size:11px"></i>
+    </button>
+    <div class="guide-body" id="guide-body">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Criar conta no Render</div>
+          <div class="step-desc">Acesse <a href="https://render.com" target="_blank" class="step-link">render.com</a> e crie uma conta gratuita. Pode usar login com GitHub.</div>
         </div>
-        <button class="btn-logout" onclick="glpiLogout()">
-          <i class="fa-solid fa-right-from-bracket" style="font-size:11px"></i> Sair
-        </button>
       </div>
 
-      <div class="portal-tabs">
-        <button class="portal-tab active" id="tab-tickets" onclick="switchTab('tickets')">
-          <i class="fa-solid fa-ticket" style="font-size:12px"></i> Meus Chamados
-        </button>
-        <button class="portal-tab" id="tab-new" onclick="switchTab('new')">
-          <i class="fa-solid fa-plus" style="font-size:12px"></i> Abrir Chamado
-        </button>
-      </div>
-
-      <!-- Panel: lista de chamados -->
-      <div class="portal-panel active" id="panel-tickets">
-        <div id="tickets-list">
-          <div class="empty-state">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="7" y1="9" x2="17" y2="9" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="7" y1="13" x2="13" y2="13" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
-            <p>Carregando chamados…</p>
-          </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Criar banco PostgreSQL</div>
+          <div class="step-desc">No dashboard do Render, clique em <strong style="color:#94a3b8">New → PostgreSQL</strong>. Selecione o plano gratuito e anote a <strong style="color:#94a3b8">Internal Database URL</strong>.</div>
         </div>
       </div>
 
-      <!-- Panel: novo chamado -->
-      <div class="portal-panel" id="panel-new">
-        <div class="form-grid">
-          <input type="text" id="ticket-title" class="portal-input" placeholder="Título do chamado *" style="margin-bottom:0">
-          <select id="ticket-category" class="portal-select">
-            <option value="">Categoria</option>
-            <option value="firewall">Firewall / Segurança</option>
-            <option value="infra">Infraestrutura de Rede</option>
-            <option value="server">Servidores / Virtualização</option>
-            <option value="datacenter">Data Center</option>
-            <option value="monitoring">Monitoramento</option>
-            <option value="other">Outro</option>
-          </select>
-          <select id="ticket-urgency" class="portal-select">
-            <option value="3">Urgência: Normal</option>
-            <option value="4">Urgência: Alta</option>
-            <option value="5">Urgência: Crítica</option>
-            <option value="2">Urgência: Baixa</option>
-          </select>
-          <textarea id="ticket-desc" class="portal-textarea" placeholder="Descreva o problema ou solicitação em detalhe…"></textarea>
-          <button class="portal-btn" id="submit-ticket-btn" onclick="glpiCreateTicket()">
-            <div class="spinner" id="ticket-spinner"></div>
-            <i class="fa-solid fa-paper-plane" id="ticket-btn-icon" style="font-size:13px"></i>
-            <span id="ticket-btn-text">Enviar Chamado</span>
-          </button>
-          <p class="portal-error" id="ticket-error" style="margin-top:0"></p>
-          <p class="portal-success-msg" id="ticket-success-msg">✔ Chamado aberto com sucesso!</p>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Deploy do Peppermint via Docker</div>
+          <div class="step-desc">Clique em <strong style="color:#94a3b8">New → Web Service → Deploy an existing image</strong> e use:</div>
+          <div class="step-code">pepperlabs/peppermint:latest</div>
         </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Variáveis de ambiente</div>
+          <div class="step-desc">Em <strong style="color:#94a3b8">Environment</strong>, adicione:</div>
+          <div class="step-code">DATABASE_URL  = (cole a URL do PostgreSQL)
+SECRET        = qualquer-string-longa-aleatoria
+PORT          = 3000</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Configurar porta e fazer deploy</div>
+          <div class="step-desc">Em <strong style="color:#94a3b8">Settings</strong> defina a porta <code style="color:#7dd3fc;font-family:monospace;font-size:0.72rem">3000</code>. Clique em <strong style="color:#94a3b8">Deploy</strong> e aguarde ~3 min. O Render gera uma URL pública automática.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">Colar a URL nesta página</div>
+          <div class="step-desc">Copie a URL gerada (ex: <code style="color:#7dd3fc;font-family:monospace;font-size:0.72rem">https://phronexsec-suporte.onrender.com</code>), cole no campo acima e clique <strong style="color:#94a3b8">Salvar</strong>. O botão será ativado automaticamente.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-content">
+          <div class="step-title">Criar usuários para os clientes</div>
+          <div class="step-desc">No Peppermint, acesse <strong style="color:#94a3b8">Admin → Users → Create</strong> e crie um login para cada cliente. Login padrão inicial: <code style="color:#7dd3fc;font-family:monospace;font-size:0.72rem">admin@admin.com / 1234</code></div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid #1e293b;font-size:0.7rem;color:#334155;font-family:'JetBrains Mono',monospace;line-height:1.7">
+        &#8505; Plano gratuito do Render tem <strong style="color:#475569">cold start</strong> (~30s na 1ª abertura após inatividade). Para manter ativo, use <a href="https://uptimerobot.com" target="_blank" class="step-link">UptimeRobot</a> (gratuito) pingando a URL a cada 5 min, ou considere o plano Starter ($7/mês).
       </div>
 
     </div>
   </div>
 </main>
 
-<footer class="portal-footer">
-  © 2026 PhronexSec Cybersecurity · Defesa de Infraestruturas Críticas
-</footer>
-
+<footer>© 2026 PhronexSec Cybersecurity · Defesa de Infraestruturas Críticas</footer>
 
 <script>
-/* ══════════════════════════════════════════
-   GLPI PORTAL — Configuração
-   ══════════════════════════════════════════
-   1. Instale o GLPI: https://glpi-project.org/downloads/
-   2. Ative a API REST: Configuração > Geral > API
-   3. Crie um App-Token: Configuração > Geral > API > Clientes API
-   4. Preencha os valores abaixo:
-*/
-const GLPI_CONFIG = {
-  url:       'https://SEU-GLPI.phronexsec.com/apirest.php', // ← URL do seu GLPI
-  app_token: 'SEU_APP_TOKEN_AQUI',                          // ← App-Token da API
-};
-/* ══════════════════════════════════════════ */
+const STORAGE_KEY = 'phronexsec_peppermint_url';
+// Cole aqui a URL após o deploy para não precisar configurar manualmente:
+const URL_HARDCODED = ''; // ex: 'https://phronexsec-suporte.onrender.com'
 
-if (!GLPI_CONFIG.url.includes('SEU-GLPI')) {
-  document.getElementById('glpi-config-notice').style.display = 'none';
-}
+function getUrl(){ return localStorage.getItem(STORAGE_KEY) || URL_HARDCODED || ''; }
 
-let glpiSession  = null;
-let glpiUserId   = null;
-let glpiUserName = '';
-
-async function glpiRequest(path, method = 'GET', body = null) {
-  const headers = { 'Content-Type': 'application/json', 'App-Token': GLPI_CONFIG.app_token };
-  if (glpiSession) headers['Session-Token'] = glpiSession;
-  const opts = { method, headers };
-  if (body) opts.body = JSON.stringify(body);
-  const res = await fetch(GLPI_CONFIG.url + path, opts);
-  if (!res.ok) throw new Error(`GLPI ${res.status}`);
-  return res.json();
-}
-
-async function glpiLogin() {
-  const user   = document.getElementById('glpi-user').value.trim();
-  const pass   = document.getElementById('glpi-pass').value;
-  const errEl  = document.getElementById('portal-login-error');
-  const spinner= document.getElementById('login-spinner');
-  const btnTxt = document.getElementById('login-btn-text');
-  const btn    = document.getElementById('portal-login-btn');
-
-  errEl.classList.remove('show');
-  if (!user || !pass) { errEl.textContent = 'Preencha usuário e senha.'; errEl.classList.add('show'); return; }
-
-  // Demo mode (GLPI não configurado)
-  if (GLPI_CONFIG.url.includes('SEU-GLPI')) {
-    glpiUserName = user;
-    document.getElementById('portal-username-display').textContent = user;
-    document.getElementById('portal-login-panel').classList.add('hide');
-    document.getElementById('portal-dashboard').classList.add('show');
-    renderDemoTickets();
-    return;
-  }
-
-  spinner.classList.add('show'); btnTxt.style.display = 'none'; btn.disabled = true;
-  try {
-    const data = await fetch(GLPI_CONFIG.url + '/initSession', {
-      headers: { 'Authorization': 'Basic ' + btoa(user + ':' + pass), 'App-Token': GLPI_CONFIG.app_token }
-    }).then(r => { if (!r.ok) throw new Error(); return r.json(); });
-
-    glpiSession  = data.session_token;
-    glpiUserName = user;
-    const me = await glpiRequest('/getMyProfiles');
-    glpiUserId = me?.myprofiles?.[0]?.id || null;
-
-    document.getElementById('portal-username-display').textContent = user;
-    document.getElementById('portal-login-panel').classList.add('hide');
-    document.getElementById('portal-dashboard').classList.add('show');
-    loadTickets();
-  } catch {
-    errEl.textContent = 'Usuário ou senha incorretos.';
-    errEl.classList.add('show');
-  } finally {
-    spinner.classList.remove('show'); btnTxt.style.display = ''; btn.disabled = false;
+function setButtonState(url){
+  const btn   = document.getElementById('open-portal-btn');
+  const badge = document.getElementById('status-badge');
+  const btxt  = document.getElementById('status-text');
+  if(url){
+    btn.href = url;
+    btn.classList.remove('disabled');
+    badge.className = 'status-badge configured';
+    btxt.textContent = 'Portal configurado';
+  } else {
+    btn.href = '#';
+    btn.classList.add('disabled');
+    badge.className = 'status-badge pending';
+    btxt.textContent = 'Aguardando configuração';
   }
 }
 
-async function glpiLogout() {
-  if (glpiSession) { try { await glpiRequest('/killSession'); } catch {} }
-  glpiSession = null; glpiUserId = null; glpiUserName = '';
-  document.getElementById('portal-login-panel').classList.remove('hide');
-  document.getElementById('portal-dashboard').classList.remove('show');
-  document.getElementById('glpi-user').value = '';
-  document.getElementById('glpi-pass').value = '';
-  document.getElementById('portal-login-error').classList.remove('show');
-  switchTab('tickets');
+function onUrlInput(){
+  setButtonState(document.getElementById('peppermint-url').value.trim());
 }
 
-function switchTab(tab) {
-  document.querySelectorAll('.portal-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.portal-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.getElementById('panel-' + tab).classList.add('active');
-  if (tab === 'tickets') loadTickets();
+function saveUrl(){
+  const val = document.getElementById('peppermint-url').value.trim();
+  if(!val) return;
+  localStorage.setItem(STORAGE_KEY, val);
+  setButtonState(val);
+  const btn = document.querySelector('.url-save-btn');
+  btn.textContent = '✔ Salvo!'; btn.style.color = '#34d399';
+  setTimeout(()=>{ btn.textContent='Salvar'; btn.style.color=''; }, 2000);
 }
 
-const STATUS_MAP = {
-  1: { label:'Novo',           dot:'st-new',      badge:'bg-new'      },
-  2: { label:'Em Atendimento', dot:'st-progress',  badge:'bg-progress' },
-  3: { label:'Em Espera',      dot:'st-waiting',   badge:'bg-waiting'  },
-  4: { label:'Resolvido',      dot:'st-solved',    badge:'bg-solved'   },
-  5: { label:'Fechado',        dot:'st-closed',    badge:'bg-closed'   },
-  6: { label:'Cancelado',      dot:'st-closed',    badge:'bg-closed'   },
-};
+function openPortal(e){ if(!getUrl()) e.preventDefault(); }
 
-function fmtDate(s) {
-  if (!s) return '—';
-  return new Date(s).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' });
+function toggleGuide(){
+  document.getElementById('guide-body').classList.toggle('open');
+  document.getElementById('guide-toggle').classList.toggle('open');
 }
 
-function renderTickets(list) {
-  const el = document.getElementById('tickets-list');
-  if (!list || !list.length) {
-    el.innerHTML = `<div class="empty-state">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="7" y1="9" x2="17" y2="9" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="7" y1="13" x2="13" y2="13" stroke="currentColor" stroke-width="1.5"/>
-      </svg>
-      <p>Nenhum chamado encontrado.</p></div>`;
-    return;
-  }
-  el.innerHTML = list.map(t => {
-    const s = STATUS_MAP[t.status] || STATUS_MAP[1];
-    return `<div class="ticket-card">
-      <div class="ticket-dot ${s.dot}"></div>
-      <span class="ticket-id">#${t.id}</span>
-      <span class="ticket-name">${t.name || '(sem título)'}</span>
-      <span class="ticket-badge ${s.badge}">${s.label}</span>
-      <span class="ticket-date">${fmtDate(t.date)}</span>
-    </div>`;
-  }).join('');
-}
+(function init(){
+  const saved = getUrl();
+  if(saved){ document.getElementById('peppermint-url').value = saved; setButtonState(saved); }
+})();
 
-function renderDemoTickets() {
-  renderTickets([
-    { id:1042, name:'Firewall bloqueando tráfego VPN',           status:2, date:'2026-03-10' },
-    { id:1038, name:'Configuração de nova VLAN — Filial SP',     status:4, date:'2026-03-05' },
-    { id:1031, name:'Monitoramento Zabbix offline',              status:5, date:'2026-02-28' },
-    { id:1027, name:'Renovação de certificado SSL',              status:1, date:'2026-03-12' },
-    { id:1021, name:'Recondicionamento rack — Data Center Curitiba', status:3, date:'2026-02-20' },
-  ]);
-}
+document.getElementById('peppermint-url').addEventListener('keydown', e=>{ if(e.key==='Enter') saveUrl(); });
 
-async function loadTickets() {
-  if (!glpiSession) { renderDemoTickets(); return; }
-  try {
-    const data = await glpiRequest('/Ticket?is_deleted=0&order=DESC&sort=date&range=0-19');
-    renderTickets(Array.isArray(data) ? data : []);
-  } catch { renderDemoTickets(); }
-}
-
-async function glpiCreateTicket() {
-  const title   = document.getElementById('ticket-title').value.trim();
-  const desc    = document.getElementById('ticket-desc').value.trim();
-  const urgency = parseInt(document.getElementById('ticket-urgency').value);
-  const errEl   = document.getElementById('ticket-error');
-  const spinner = document.getElementById('ticket-spinner');
-  const btnIcon = document.getElementById('ticket-btn-icon');
-  const btnTxt  = document.getElementById('ticket-btn-text');
-  const btn     = document.getElementById('submit-ticket-btn');
-  const ok      = document.getElementById('ticket-success-msg');
-
-  errEl.classList.remove('show'); ok.style.display = 'none';
-  if (!title) { errEl.textContent = 'O título é obrigatório.'; errEl.classList.add('show'); return; }
-  if (!desc)  { errEl.textContent = 'Descreva o problema.';    errEl.classList.add('show'); return; }
-
-  spinner.classList.add('show'); btnIcon.style.display = 'none'; btnTxt.style.display = 'none'; btn.disabled = true;
-
-  if (!glpiSession) {
-    await new Promise(r => setTimeout(r, 1100));
-    spinner.classList.remove('show'); btnIcon.style.display=''; btnTxt.style.display=''; btn.disabled=false;
-    document.getElementById('ticket-title').value = '';
-    document.getElementById('ticket-desc').value  = '';
-    ok.style.display = 'block';
-    setTimeout(() => { ok.style.display='none'; switchTab('tickets'); }, 2500);
-    return;
-  }
-
-  try {
-    await glpiRequest('/Ticket', 'POST', {
-      input: { name: title, content: desc, urgency, _users_id_requester: glpiUserId }
-    });
-    spinner.classList.remove('show'); btnIcon.style.display=''; btnTxt.style.display=''; btn.disabled=false;
-    document.getElementById('ticket-title').value = '';
-    document.getElementById('ticket-desc').value  = '';
-    ok.style.display = 'block';
-    setTimeout(() => { ok.style.display='none'; switchTab('tickets'); }, 2500);
-  } catch {
-    errEl.textContent = 'Erro ao abrir chamado. Tente novamente.';
-    errEl.classList.add('show');
-    spinner.classList.remove('show'); btnIcon.style.display=''; btnTxt.style.display=''; btn.disabled=false;
-  }
-}
-
-// Enter key no login
-['glpi-user','glpi-pass'].forEach(id =>
-  document.getElementById(id)?.addEventListener('keydown', e => { if (e.key==='Enter') glpiLogin(); })
-);
-
-/* ── Particle background (leve) ── */
+/* Particles */
 (function(){
-  const c = document.getElementById('bg');
-  const ctx = c.getContext('2d');
-  let W, H, pts = [];
-  function resize(){ W = c.width = innerWidth; H = c.height = innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-  for(let i=0;i<80;i++) pts.push({
-    x: Math.random()*9999, y: Math.random()*9999,
-    vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3,
-    r: Math.random()*1.4+.4, a: Math.random()*.5+.1
-  });
-  function draw(){
+  const c=document.getElementById('bg'), ctx=c.getContext('2d');
+  let W,H;
+  const pts=Array.from({length:70},()=>({
+    x:Math.random()*9999,y:Math.random()*9999,
+    vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,
+    r:Math.random()*1.3+.3,a:Math.random()*.35+.08
+  }));
+  function resize(){ W=c.width=innerWidth; H=c.height=innerHeight; }
+  resize(); window.addEventListener('resize',resize);
+  (function draw(){
     ctx.clearRect(0,0,W,H);
     pts.forEach(p=>{
       p.x+=p.vx; p.y+=p.vy;
       if(p.x<0||p.x>W) p.vx*=-1;
       if(p.y<0||p.y>H) p.vy*=-1;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,118,245,${p.a})`;
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,118,245,${p.a})`; ctx.fill();
     });
     requestAnimationFrame(draw);
-  }
-  draw();
+  })();
 })();
 </script>
 </body>
