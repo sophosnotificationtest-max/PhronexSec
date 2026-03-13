@@ -158,8 +158,45 @@ canvas {
   opacity: 0.8;
   white-space: nowrap;
 }
-.techSlider { display: flex; gap: 16px; width: max-content; align-items: center; animation: slideTech 40s linear infinite; }
+.techSlider { display: flex; gap: 14px; width: max-content; align-items: center; animation: slideTech 35s linear infinite; }
 @keyframes slideTech { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* Tech pills — no external CDN needed */
+.tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 100px;
+  background: rgba(10,18,35,0.8);
+  border: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
+  color: var(--c);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity .3s, transform .3s, box-shadow .3s;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--c) 10%, transparent);
+  cursor: pointer;
+  text-decoration: none;
+}
+.tech-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 8px var(--c);
+  flex-shrink: 0;
+}
+.tech-pill:hover {
+  opacity: 1;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--c) 25%, transparent);
+}
 
 /* ── Lang buttons ── */
 .lang-btn { transition: .3s; opacity: .6; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; font-weight: 500; }
@@ -511,6 +548,37 @@ canvas {
   </div>
 </section>
 
+
+<!-- ═══════════════ TECNOLOGIAS ═══════════════ -->
+<section class="py-20 border-y border-slate-900/60 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 text-center mb-12">
+    <h2 class="text-4xl font-bold text-white" style="letter-spacing:-0.025em" data-i18n="techTitle">Tecnologias</h2>
+  </div>
+  <div class="relative w-full overflow-hidden">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(to right,#02060c 40%,transparent);z-index:2;pointer-events:none"></div>
+    <div style="position:absolute;right:0;top:0;bottom:0;width:160px;background:linear-gradient(to left,#02060c 40%,transparent);z-index:2;pointer-events:none"></div>
+    <div class="techSlider" id="techSlider">
+      <a href="https://www.sophos.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#4161E1">Sophos</a>
+      <a href="https://www.fortinet.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#EE2024">Fortinet</a>
+      <a href="https://www.cisco.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#049fd9">Cisco</a>
+      <a href="https://www.vmware.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#607078">VMware</a>
+      <a href="https://mikrotik.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#CC0000">MikroTik</a>
+      <a href="https://www.linux.org" target="_blank" rel="noopener" class="tech-pill" style="--c:#FCC624">Linux</a>
+      <a href="https://www.zabbix.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#D40000">Zabbix</a>
+      <a href="https://grafana.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#F47A20">Grafana</a>
+      <a href="https://www.veeam.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#00B336">Veeam</a>
+      <a href="https://aws.amazon.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#FF9900">AWS</a>
+      <a href="https://www.acronis.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#EF4136">Acronis</a>
+      <a href="https://www.wireshark.org" target="_blank" rel="noopener" class="tech-pill" style="--c:#1679A7">Wireshark</a>
+      <a href="https://www.redhat.com" target="_blank" rel="noopener" class="tech-pill" style="--c:#EE0000">Red Hat</a>
+      <a href="https://www.pfsense.org" target="_blank" rel="noopener" class="tech-pill" style="--c:#F47A20">pfSense</a>
+      <a href="https://www.microsoft.com/windows-server" target="_blank" rel="noopener" class="tech-pill" style="--c:#0078D4">Windows Server</a>
+      <a href="https://www.sophos.com/en-us/products/sophos-central" target="_blank" rel="noopener" class="tech-pill" style="--c:#0076f5">Sophos Central</a>
+      <a href="https://www.veeam.com/vm-backup-recovery-replication-software.html" target="_blank" rel="noopener" class="tech-pill" style="--c:#607078">Veeam Backup</a>
+      <a href="https://www.vmware.com/products/sd-wan.html" target="_blank" rel="noopener" class="tech-pill" style="--c:#326CE5">SD-WAN</a>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════ CONTATO ═══════════════ -->
 <section id="contato" class="py-24">
@@ -1188,14 +1256,4 @@ animate();
 
   // Show banner if no decision stored
   if (!localStorage.getItem(COOKIE_KEY)) {
-    setTimeout(() => banner.classList.add('show'), 800);
-  } else {
-    banner.style.display = 'none';
-  }
-
-  btnOk.addEventListener('click', () => dismiss(true));
-  btnNo.addEventListener('click', () => dismiss(false));
-})();
-</script>
-</body>
-</html>
+    
