@@ -270,12 +270,13 @@ canvas {
 .modal-close:hover { background: rgba(0,118,245,0.2); color: #fff; border-color: var(--blue); }
 
 .modal-icon-wrap {
-  width: 58px; height: 58px;
-  border-radius: 14px;
-  background: rgba(0,118,245,0.12);
-  border: 1px solid rgba(0,118,245,0.25);
+  width: 72px; height: 72px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(0,118,245,0.18), rgba(96,165,250,0.08));
+  border: 1px solid rgba(0,118,245,0.3);
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 30px rgba(0,118,245,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
 }
 .modal-icon-wrap i { font-size: 24px; color: var(--blue); }
 
@@ -674,7 +675,11 @@ canvas {
     <div class="modal-header">
       <button class="modal-close" onclick="closeModal('firewall')"><i class="fa-solid fa-xmark"></i></button>
       <div class="modal-icon-wrap">
-        <i class="fa-solid fa-shield-halved"></i>
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="mg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#0076f5"/></linearGradient></defs>
+          <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V6L12 2z" fill="url(#mg1)" opacity="0.15" stroke="url(#mg1)" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M9 12l2 2 4-4" stroke="url(#mg1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
       <h2 class="modal-title" data-i18n="svc1">Gestão Avançada de Firewalls</h2>
       <p class="modal-subtitle" data-i18n="svc1Tag">Network Security · Perimeter Defense · Policy Management</p>
@@ -709,7 +714,17 @@ canvas {
     <div class="modal-header">
       <button class="modal-close" onclick="closeModal('infra')"><i class="fa-solid fa-xmark"></i></button>
       <div class="modal-icon-wrap">
-        <i class="fa-solid fa-network-wired"></i>
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="mg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#0076f5"/></linearGradient></defs>
+          <rect x="9" y="2" width="6" height="4" rx="1" fill="url(#mg2)" opacity="0.2" stroke="url(#mg2)" stroke-width="1.5"/>
+          <rect x="2" y="10" width="6" height="4" rx="1" fill="url(#mg2)" opacity="0.2" stroke="url(#mg2)" stroke-width="1.5"/>
+          <rect x="16" y="10" width="6" height="4" rx="1" fill="url(#mg2)" opacity="0.2" stroke="url(#mg2)" stroke-width="1.5"/>
+          <rect x="9" y="18" width="6" height="4" rx="1" fill="url(#mg2)" opacity="0.2" stroke="url(#mg2)" stroke-width="1.5"/>
+          <line x1="12" y1="6" x2="12" y2="10" stroke="url(#mg2)" stroke-width="1.5"/>
+          <line x1="12" y1="10" x2="5" y2="12" stroke="url(#mg2)" stroke-width="1.5"/>
+          <line x1="12" y1="10" x2="19" y2="12" stroke="url(#mg2)" stroke-width="1.5"/>
+          <line x1="12" y1="14" x2="12" y2="18" stroke="url(#mg2)" stroke-width="1.5"/>
+        </svg>
       </div>
       <h2 class="modal-title" data-i18n="svc2">Infraestrutura de TI</h2>
       <p class="modal-subtitle" data-i18n="svc2Tag">Network Architecture · SD-WAN · Virtualization · Server Support</p>
@@ -730,6 +745,7 @@ canvas {
         <li data-i18n="it6">Suporte a servidores Linux e Windows Server</li>
         <li data-i18n="it7">Soluções de virtualização de servidores e backup</li>
         <li data-i18n="it8">Diagnóstico, otimização de conectividade e redimensionamento (Resizing)</li>
+        <li data-i18n="it9">Recondicionamento de Data Centers em todo o Brasil</li>
       </ul>
       <a href="#contato" class="modal-cta" onclick="closeModal('infra')">
         <i class="fa-solid fa-envelope"></i>
@@ -745,7 +761,13 @@ canvas {
     <div class="modal-header">
       <button class="modal-close" onclick="closeModal('soc')"><i class="fa-solid fa-xmark"></i></button>
       <div class="modal-icon-wrap">
-        <i class="fa-solid fa-chart-line"></i>
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="mg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#0076f5"/></linearGradient></defs>
+          <rect x="2" y="3" width="20" height="14" rx="2" fill="url(#mg3)" opacity="0.1" stroke="url(#mg3)" stroke-width="1.5"/>
+          <polyline points="5,12 8,8 11,13 14,7 17,10 19,9" stroke="url(#mg3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <line x1="8" y1="21" x2="16" y2="21" stroke="url(#mg3)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="12" y1="17" x2="12" y2="21" stroke="url(#mg3)" stroke-width="1.5"/>
+        </svg>
       </div>
       <h2 class="modal-title" data-i18n="svc3">Monitoramento de Rede</h2>
       <p class="modal-subtitle" data-i18n="svc3Tag">Event Monitoring · Log Analysis · Incident Investigation</p>
@@ -845,6 +867,7 @@ const T = {
     it6: "Linux and Windows Server support",
     it7: "Server virtualization and backup solutions",
     it8: "Connectivity diagnostics, optimization and resizing",
+    it9: "Data Center reconditioning across Brazil",
     soc1: "Continuous network event monitoring",
     soc2: "Network and firewall log analysis",
     soc3: "Security incident investigation and response",
@@ -901,6 +924,7 @@ const T = {
     it6: "Soporte a servidores Linux y Windows Server",
     it7: "Soluciones de virtualización de servidores y backup",
     it8: "Diagnóstico, optimización de conectividad y redimensionamiento",
+    it9: "Reacondicionamiento de Data Centers en todo Brasil",
     soc1: "Monitoreo continuo de eventos de red",
     soc2: "Análisis de logs de red y firewall",
     soc3: "Investigación y respuesta a incidentes de seguridad",
