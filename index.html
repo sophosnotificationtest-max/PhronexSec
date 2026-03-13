@@ -506,39 +506,56 @@ canvas {
     <h2 data-i18n="servicesTitle" class="text-4xl font-bold mb-4" style="letter-spacing:-0.025em">Principais Serviços</h2>
 
 
-    <div class="grid md:grid-cols-3 gap-8 text-left">
+    <div class="grid md:grid-cols-3 gap-8 text-center mt-10">
 
       <!-- Card 1 -->
-      <div class="service-card p-8 rounded-2xl" onclick="openModal('firewall')">
-        <div class="flex items-start justify-between mb-6">
-          <div class="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-            <i class="fa-solid fa-shield-halved text-blue-500 text-2xl"></i>
+      <div class="service-card p-10 rounded-2xl" onclick="openModal('firewall')">
+        <div class="flex justify-center mb-6">
+          <div class="w-20 h-20 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center" style="box-shadow:0 0 30px rgba(0,118,245,0.12)">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#0076f5"/></linearGradient></defs>
+              <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V6L12 2z" fill="url(#sg1)" opacity="0.15" stroke="url(#sg1)" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M9 12l2 2 4-4" stroke="url(#sg1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
-          <i class="fa-solid fa-arrow-right text-slate-600 arrow-icon mt-1"></i>
         </div>
         <h3 class="text-xl font-semibold mb-3" style="letter-spacing:-0.018em" data-i18n="svc1">Gestão Avançada de Firewalls</h3>
         <p class="text-slate-400 text-sm leading-relaxed" data-i18n="svc1Desc">IPS, ATP, AV, VPN, WAF, NAT e Hardening de segurança de rede corporativa.</p>
       </div>
 
       <!-- Card 2 -->
-      <div class="service-card p-8 rounded-2xl" onclick="openModal('infra')">
-        <div class="flex items-start justify-between mb-6">
-          <div class="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-            <i class="fa-solid fa-network-wired text-blue-500 text-2xl"></i>
+      <div class="service-card p-10 rounded-2xl" onclick="openModal('infra')">
+        <div class="flex justify-center mb-6">
+          <div class="w-20 h-20 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center" style="box-shadow:0 0 30px rgba(0,118,245,0.12)">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="sg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#0076f5"/></linearGradient></defs>
+              <rect x="9" y="2" width="6" height="4" rx="1" fill="url(#sg2)" opacity="0.2" stroke="url(#sg2)" stroke-width="1.5"/>
+              <rect x="2" y="10" width="6" height="4" rx="1" fill="url(#sg2)" opacity="0.2" stroke="url(#sg2)" stroke-width="1.5"/>
+              <rect x="16" y="10" width="6" height="4" rx="1" fill="url(#sg2)" opacity="0.2" stroke="url(#sg2)" stroke-width="1.5"/>
+              <rect x="9" y="18" width="6" height="4" rx="1" fill="url(#sg2)" opacity="0.2" stroke="url(#sg2)" stroke-width="1.5"/>
+              <line x1="12" y1="6" x2="12" y2="10" stroke="url(#sg2)" stroke-width="1.5"/>
+              <line x1="12" y1="10" x2="5" y2="12" stroke="url(#sg2)" stroke-width="1.5"/>
+              <line x1="12" y1="10" x2="19" y2="12" stroke="url(#sg2)" stroke-width="1.5"/>
+              <line x1="12" y1="14" x2="12" y2="18" stroke="url(#sg2)" stroke-width="1.5"/>
+            </svg>
           </div>
-          <i class="fa-solid fa-arrow-right text-slate-600 arrow-icon mt-1"></i>
         </div>
         <h3 class="text-xl font-semibold mb-3" style="letter-spacing:-0.018em" data-i18n="svc2">Infraestrutura de TI</h3>
         <p class="text-slate-400 text-sm leading-relaxed" data-i18n="svc2Desc">Desenho SD-WAN, Switching L2/L3, VLANs, virtualização e suporte a servidores Linux/Windows.</p>
       </div>
 
       <!-- Card 3 -->
-      <div class="service-card p-8 rounded-2xl" onclick="openModal('soc')">
-        <div class="flex items-start justify-between mb-6">
-          <div class="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-            <i class="fa-solid fa-chart-line text-blue-500 text-2xl"></i>
+      <div class="service-card p-10 rounded-2xl" onclick="openModal('soc')">
+        <div class="flex justify-center mb-6">
+          <div class="w-20 h-20 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center" style="box-shadow:0 0 30px rgba(0,118,245,0.12)">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="sg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#0076f5"/></linearGradient></defs>
+              <rect x="2" y="3" width="20" height="14" rx="2" fill="url(#sg3)" opacity="0.1" stroke="url(#sg3)" stroke-width="1.5"/>
+              <polyline points="5,12 8,8 11,13 14,7 17,10 19,9" stroke="url(#sg3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <line x1="8" y1="21" x2="16" y2="21" stroke="url(#sg3)" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="12" y1="17" x2="12" y2="21" stroke="url(#sg3)" stroke-width="1.5"/>
+            </svg>
           </div>
-          <i class="fa-solid fa-arrow-right text-slate-600 arrow-icon mt-1"></i>
         </div>
         <h3 class="text-xl font-semibold mb-3" style="letter-spacing:-0.018em" data-i18n="svc3">Monitoramento de Rede</h3>
         <p class="text-slate-400 text-sm leading-relaxed" data-i18n="svc3Desc">Monitoramento de eventos, análise de logs, investigação de incidentes e resposta contínua.</p>
@@ -620,11 +637,11 @@ canvas {
     <div class="mt-10 pt-8 border-t border-slate-800/60">
       <div class="flex flex-col sm:flex-row items-center justify-center gap-6 text-center">
 
-        <a href="mailto:contato@phronexsec.com" class="flex items-center gap-3 group">
+        <a href="/cdn-cgi/l/email-protection#abc8c4c5dfcadfc4ebdbc3d9c4c5ced3d8cec885c8c4c6" class="flex items-center gap-3 group">
           <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/20 group-hover:border-blue-500/40 transition">
             <i class="fa-solid fa-envelope text-blue-400" style="font-size:13px"></i>
           </div>
-          <span class="text-sm text-slate-400 group-hover:text-blue-400 transition" style="font-family:'JetBrains Mono',monospace;letter-spacing:0.03em">contato@phronexsec.com</span>
+          <span class="text-sm text-slate-400 group-hover:text-blue-400 transition" style="font-family:'JetBrains Mono',monospace;letter-spacing:0.03em"><span class="__cf_email__" data-cfemail="d3b0bcbda7b2a7bc93a3bba1bcbdb6aba0b6b0fdb0bcbe">[email&#160;protected]</span></span>
         </a>
 
         <div class="hidden sm:block w-px h-8 bg-slate-800"></div>
@@ -758,7 +775,7 @@ canvas {
 
 
 <!-- ═══════════════ SCRIPTS ═══════════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── Modais ── */
 function openModal(id) {
   document.getElementById('modal-' + id).classList.add('open');
@@ -1249,11 +1266,4 @@ animate();
   };
 
   function dismiss(accepted) {
-    localStorage.setItem(COOKIE_KEY, accepted ? 'accepted' : 'declined');
-    banner.classList.add('hide');
-    setTimeout(() => banner.style.display = 'none', 500);
-  }
-
-  // Show banner if no decision stored
-  if (!localStorage.getItem(COOKIE_KEY)) {
-    
+    loca
