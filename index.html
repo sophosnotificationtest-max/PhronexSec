@@ -526,6 +526,8 @@ canvas {
       <a href="#servicos" class="nav-link" data-i18n="navServices">Serviços</a>
       <span class="text-slate-700 text-xs select-none">|</span>
       <a href="#contato" class="nav-link" data-i18n="navContact">Contato</a>
+      <span class="text-slate-700 text-xs select-none">|</span>
+      <a href="portal.html" target="_blank" rel="noopener" class="nav-link" style="color:#60a5fa" data-i18n="navPortal">Portal Cliente</a>
     </nav>
 
     <!-- Lang buttons (desktop) + hamburger (mobile) -->
@@ -556,6 +558,11 @@ canvas {
   <a href="#contato" class="mobile-nav-link" onclick="closeMobileMenu()" data-i18n="navContact">
     <i class="fa-solid fa-envelope" style="font-size:13px;color:#475569"></i>
     <span>Contato</span>
+  </a>
+  <div class="mobile-nav-divider"></div>
+  <a href="portal.html" target="_blank" rel="noopener" class="mobile-nav-link portal" onclick="closeMobileMenu()" data-i18n="navPortal">
+    <i class="fa-solid fa-user-shield" style="font-size:13px"></i>
+    <span>Portal Cliente</span>
   </a>
   <div class="mobile-nav-divider"></div>
   <div class="mobile-lang-row">
@@ -1416,18 +1423,6 @@ animate();
     localStorage.setItem('phronexsec_cookie_consent', accepted ? 'accepted' : 'declined');
     document.getElementById('cookie-banner').style.display = 'none';
   }
-</script>
-
-<!-- Crisp Chat -->
-<script type="text/javascript">
-window.$crisp=[];
-window.CRISP_WEBSITE_ID="c4c6b9ce-39ac-4f92-960d-541325ac25b2";
-(function(){
-  d=document;s=d.createElement("script");
-  s.src="https://client.crisp.chat/l.js";
-  s.async=1;
-  d.getElementsByTagName("head")[0].appendChild(s);
-})();
 </script>
 </body>
 </html>
